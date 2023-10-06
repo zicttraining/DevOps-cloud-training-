@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-poc
+  namespace: zict
+  labels:
+    tier: training
+    app: node-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+      - name: application
+        image: 872331995249.dkr.ecr.us-east-2.amazonaws.com/app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SERVICE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: ENV
+        envFrom:
+        - secretRef:
+            name: app-secret       
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        - name: app-volume
+          mountPath: /app
+      volumes:
+      - name: config-volume
+        configMap:
+          name: config 
+      - name: app-volume
+        persistentVolumeClaim:
+          claimName: app-pvc
