@@ -15,6 +15,71 @@
 
 1. Launch an Amazon EC2 instance with name of "First EC2"
 
+To launch an Amazon EC2 instance, you can follow these steps:
+
+**1.1** - **Sign in to the AWS Management Console:**
+```text
+Go to [AWS Management Console](https://aws.amazon.com/console/").
+```
+
+1.2 - **Navigate to EC2:**
+```text
+Under the "Compute" section, click on "EC2" to open the EC2 dashboard.
+Click on the "Launch Instance" button.
+```
+
+1.3 - **Choose an Amazon Machine Image (AMI):**
+```text
+Search for "Amazon Linux 2 AMI" and select the appropriate version.
+```
+
+1.4 - **Choose Instance Type:**
+```text
+Select the instance type based on your requirements. The default option is usually sufficient for testing purposes.
+```
+
+1.5 - **Configure Instance:**
+```text
+Configure the instance details such as the number of instances, network settings, etc. You can keep the default settings for most configurations.
+```
+
+1.6 - **Add Storage:**
+```text
+Specify the size and type of storage (EBS volumes) for your instance. The default settings are usually sufficient for testing purposes.
+```
+
+1.7 - **Add Tags:**
+```text
+(Optional) Add tags to your instance for better organization and management.
+```
+
+1.8 - **Configure Security Group:**
+```text
+Create a new security group or select an existing one. Make sure to allow SSH (port 22) access from your IP address or a specific range of IP addresses.
+```
+
+1.9 - **Review Instance Launch:**
+```text
+Review all the configurations you've made for your instance. If everything looks good, click "Launch."
+```
+
+1.10 - **Select Key Pair:**
+```text
+Choose an existing key pair or create a new one. This key pair is necessary to SSH into your instance.
+```
+
+1.11 - **Launch Instance:**
+```text
+Click "Launch Instances" to launch your EC2 instance.
+```
+
+1.12 - **Access the Instance:**
+```text
+Once the instance is running, you can access it via SSH using the public IP address or public DNS name provided in the EC2 dashboard, along with the private key (.pem file) associated with the selected key pair.
+```
+
+**Here is the sample configuration for Instance Launch:**
+
 ```text
 AMI             : "Amazon Linux 2"
 Instance Type   : "t2micro"
@@ -23,7 +88,6 @@ VPC             : "Default VPC"
 Security Group: "0.0.0.0/0-----> Port 22"
 Keypair         : Create a new one as "firstkey"
 ```
-
 
 ## Part 1 - Connect with SSH for WINDOWS-"Gitbash"
 
