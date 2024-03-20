@@ -1,0 +1,8 @@
++ git config user.email nhu.luong@zicloudtech.com
++ git config user.name nhu.luong
++ BUILD_NUMBER=142
++ echo 142
+142
++ sed -i s/tetrisv1:/tetrisv1:142/ deployment-service.yml
++ git add deployment-service.yml
++ git add --all
