@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'devops-handson', url: 'https://github.com/nhuluong2024/DevSecOps-Demo.git'
+                git branch: 'devops-appdemo', url: 'https://github.com/nhuluong2024/DevSecOps-devops.git'
             }
         }
         stage("Docker Image Build") {
@@ -44,19 +44,20 @@ pipeline {
         }
         stage('Checkout Code') {
             steps {
-                git branch: 'devops-handson', url: 'https://github.com/nhuluong2024/DevSecOps-Demo.git'
+                git branch: 'devops-appdemo', url: 'https://github.com/nhuluong2024/DevSecOps-devops.git'
             }
         }
             steps {
                 dir('Manifest-file') {
                     withAWS( region:'us-west-2', credentials:'aws-key' ) {
                         sh 'echo "Deploying image to AWS EKS cluster ..."'
-                        sh 'aws eks --region us-west-2 update-kubeconfig --name Tetris-EKS-Cluster-demo'
-                        sh 'kubectl config use-context arn:aws:eks:us-west-2:428819381342:cluster/Tetris-EKS-Cluster-demo' 
+                        sh 'aws eks --region us-west-2 update-kubeconfig --name devops-eks-cluster'
+                        sh 'kubectl config use-context arn:aws:eks:us-west-2:428819381342:cluster/devops-eks-cluster' 
                         sh 'cd Manifest-file'
                         sh 'pwd'
                         sh 'ls -la'
-                        sh 'kubectl apply -f deployment-service.yml'
+                        sh 'kubectl apply -f deployment.yml'
+                        sh 'kubectl apply -f service.yml'
                         sh 'kubectl get deployment'
                         sh 'kubectl get pod -o wide'                        
                     }
