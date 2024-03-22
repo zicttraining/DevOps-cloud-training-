@@ -101,7 +101,7 @@ After you're done with the lab, you'll need to delete the resources to save mone
 - S3 bucket to do remote backend, you need to delete it by going to [s3-backend](./s3-backend/) directory and typing the command:
 
 ```sh
-$ cd DevOps-Demo/Code/infra_provision/EKS-Cluster
+$ cd DevOps-Demo/Infra_provision/EKS-Cluster
 $ terraform init
 $ terraform destroy -var-file=variables.tfvars --auto-approve -lock=false
 provider.aws.region

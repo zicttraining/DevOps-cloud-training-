@@ -1,0 +1,66 @@
+pipeline {
+    agent any 
+    tools {
+        jdk 'jdk'
+        nodejs 'nodejs'
+    }
+    environment  {
+        SCANNER_HOME=tool 'sonar-scanner'
+    }
+    stages {
+        stage('Cleaning Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout from Git') {
+            steps {
+                git branch: 'devops-hands-on', url: 'https://github.com/zicttraining/DevOps-cloud-training-.git'
+            }
+        }
+        stage("Docker Image Build") {
+            steps {
+                script {
+                    dir('Tetris-V1') {
+                        withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {   
+                            sh 'docker system prune -f'
+                            sh 'docker container prune -f'
+                            sh 'docker build -t tetrisv1 .'
+                        }
+                    }
+                }
+            }
+        }
+        stage("Docker Image Pushing to ECR") {
+            steps {
+                script {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId:'aws-key']]) {   
+                        sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 330169182621.dkr.ecr.us-west-2.amazonaws.com'
+                    }
+                        sh 'docker tag tetrisv1:latest 330169182621.dkr.ecr.us-west-2.amazonaws.com/my_repository:latest'
+                        sh 'docker push 330169182621.dkr.ecr.us-west-2.amazonaws.com/my_repository:latest'
+                }
+            }
+        }
+        stage('Checkout Code') {
+            steps {
+                git branch: 'devops-hands-on', url: 'https://github.com/zicttraining/DevOps-cloud-training-.git'
+            }
+        }
+            steps {
+                dir('Manifest-file') {
+                    withAWS( region:'us-west-2', credentials:'aws-key' ) {
+                        sh 'echo "Deploying image to AWS EKS cluster ..."'
+                        sh 'aws eks --region us-west-2 update-kubeconfig --name devops-eks-cluster'
+                        sh 'kubectl config use-context arn:aws:eks:us-west-2:428819381342:cluster/devops-eks-cluster' 
+                        sh 'cd Manifest-file'
+                        sh 'pwd'
+                        sh 'ls -la'
+                        sh 'kubectl apply -f deployment-service'
+                        sh 'kubectl get deployment'
+                        sh 'kubectl get pod -o wide'                        
+                    }
+            }
+        }
+    }
+}
