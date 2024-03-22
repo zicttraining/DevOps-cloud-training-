@@ -1,1 +1,0 @@
-variable "ecr_repositories" {}
