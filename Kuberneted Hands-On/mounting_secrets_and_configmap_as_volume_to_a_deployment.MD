@@ -1,4 +1,4 @@
-#### To mount a Secret or ConfigMap as a volume to a Deployment in Kubernetes, you need to define the volume and volumeMounts in the Deployment's YAML configuration file. 
+# To mount a Secret or ConfigMap as a volume to a Deployment in Kubernetes, you need to define the volume and volumeMounts in the Deployment's YAML configuration file. 
 
 Here's an example YAML configuration file for a Deployment that uses a Secret and a ConfigMap:
 

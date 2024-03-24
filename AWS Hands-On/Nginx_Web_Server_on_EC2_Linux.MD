@@ -32,7 +32,7 @@ At the end of the this hands-on training, you will be able to;
 
 0. Connect to your instance with SSH.
 ```sh
-ssh -i [Your Key pair] ec2-user@[Your EC2 IP / DNS name]
+ssh -i [Your Key pair] ec2-user@[Your EC2 IP/DNS name]
 ```
 
 ## Part 2 - Installing and Configuring Nginx Web Server to Run a Simple Web Page

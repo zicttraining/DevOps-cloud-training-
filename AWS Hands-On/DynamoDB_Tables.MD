@@ -1,4 +1,4 @@
-#### Creating DynamoDB Tables
+#### Creating DynamoDB Tables on AWS Cloud
 
 ### Step 1 : Create Product Catalog Table
 

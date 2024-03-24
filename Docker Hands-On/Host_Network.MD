@@ -1,4 +1,4 @@
-### Run a container with host networking:
+## Run a container with host networking:
 ```
 docker run --network host <image_name>
 ```
@@ -19,4 +19,4 @@ docker stop <container_name>
 docker rm <container_name>
 ```
 
-These commands will help you manage containers using host networking in Docker
+#### These commands will help you manage containers using host networking in Docker

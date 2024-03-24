@@ -1,5 +1,4 @@
-#### To install Maven on a Windows machine, follow these steps:
-
+# To install Maven on a Windows machine, follow these steps:
 
 1. Download the latest Maven binary zip archive from the Apache Maven website: **https://maven.apache.org/download.cgi**
 
@@ -32,4 +31,4 @@
    mvn -version
    ```
 
-### This should display the Maven version, the Java version, and the operating system information.
+#### This should display the Maven version, the Java version, and the operating system information.

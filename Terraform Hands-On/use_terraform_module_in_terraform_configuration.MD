@@ -1,4 +1,4 @@
-#### To use a Terraform module in a Terraform configuration, you can follow these steps based on the search results:
+# To use a Terraform module in a Terraform configuration, you can follow these steps based on the search results:
 
 1. Declare Module Usage:
 

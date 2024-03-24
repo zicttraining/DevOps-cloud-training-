@@ -1,5 +1,4 @@
-### To interact with a remote backend in Terraform using Terraform commands, you can follow these steps with an example:
-
+# To interact with a remote backend in Terraform using Terraform commands, you can follow these steps with an example:
 
 1. Define Backend Configuration:
 
@@ -42,7 +41,7 @@ If needed, you can destroy resources using the 'destroy' command:
  terraform destroy
  ```
  
- By following these steps and using Terraform commands like 'init', 'plan', 'apply', and 'destroy', you can effectively interact with a remote backend in Terraform, ensuring secure storage of state data and streamlined infrastructure management.
+ #### By following these steps and using Terraform commands like 'init', 'plan', 'apply', and 'destroy', you can effectively interact with a remote backend in Terraform, ensuring secure storage of state data and streamlined infrastructure management.
  
  
  

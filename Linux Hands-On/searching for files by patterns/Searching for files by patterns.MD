@@ -1,5 +1,4 @@
-#### To search for files by patterns in their names or contents using Linux commands, you can utilize the 'find' command in combination with 'grep'.
-
+# To search for files by patterns in their names or contents using Linux commands, you can utilize the 'find' command in combination with 'grep'.
 
 Searching by Filename Patterns
 
@@ -31,6 +30,7 @@ This command will display the filenames of matching files. Add the --color optio
 ```
 find /path/to/search/ -type f -exec grep -q "string" {} \; -print | xargs -L1 less
 ```
-When searching for multiple words or phrases, separate them with spaces in the 'grep' command.
 
-Remember to adjust the paths according to your needs, replacing "/path/to/search/" with the appropriate directory or directories you wish to examine.
+#### When searching for multiple words or phrases, separate them with spaces in the 'grep' command.
+
+#### Remember to adjust the paths according to your needs, replacing "/path/to/search/" with the appropriate directory or directories you wish to examine.

@@ -1,4 +1,4 @@
-### To install the SonarQube plugin in Jenkins, follow these steps:
+# To install the SonarQube plugin in Jenkins, follow these steps:
 
 1. Open Jenkins and navigate to the **Manage Jenkins** page.
 
@@ -39,4 +39,4 @@
 19. Click on the Save button to save the project configuration.
 
 
-That's it! You have successfully installed the SonarQube plugin in Jenkins and configured a project to be analyzed with SonarQube
+#### That's it! You have successfully installed the SonarQube plugin in Jenkins and configured a project to be analyzed with SonarQube

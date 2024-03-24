@@ -1,3 +1,5 @@
+# MYSQL NOTES
+
 ```bash
 CREATE TABLE order_table (
 order_id INT,

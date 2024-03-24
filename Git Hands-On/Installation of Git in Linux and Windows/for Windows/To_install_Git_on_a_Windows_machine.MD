@@ -1,4 +1,4 @@
-### To install Git on a Windows machine, you can follow these steps:
+# To install Git on a Windows machine, you can follow these steps:
 
 1.Download the executable Git file from **git-scm.com/downloads.**
 

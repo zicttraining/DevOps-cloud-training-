@@ -1,5 +1,4 @@
-#### To create a ConfigMap in Kubernetes using the declarative method, you can use a YAML file. 
-
+# To create a ConfigMap in Kubernetes using the declarative method, you can use a YAML file. 
 
 Here's an example of creating a ConfigMap named my-configmap from a file:
 
@@ -41,7 +40,6 @@ spec:
 ```bash
 kubectl apply -f my-configmap.yaml
 ```
-
 
 #### If you want to create a ConfigMap from a directory, you can use the --from-file option with --recursive (available in kubectl version 1.19+) or use ConfigMapGenerator in kustomization.yaml (available in kubectl version 1.18+).
 

@@ -124,6 +124,7 @@ The Apache HTTP Server, known as Apache, is a free and open-source cross-platfor
 18. Configure an Amazon EC2 instance with AMI as `Amazon Linux 2`, instance type as `t2.micro`, default VPC security group which allows connections from anywhere and any port.
 
 19. Configure instance to automate web server installation with `user data` script.
+
 ```
 #! /bin/bash
 #update os
@@ -155,5 +156,4 @@ systemctl enable httpd
 
 ```
 curl http://ec2-3-15-183-78.us-east-2.compute.amazonaws.com8.us-east-2.compute.amazonaws.com
-```
-                                                                                                      
+```                                                                                          

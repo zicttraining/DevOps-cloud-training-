@@ -1,4 +1,4 @@
-###To create a Dockerfile and build a Docker image, follow these steps:
+#To create a Dockerfile and build a Docker image, follow these steps:
 
 1. Create a new file named Dockerfile in the root directory of your project.
 

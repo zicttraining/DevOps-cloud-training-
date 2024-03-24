@@ -1,4 +1,4 @@
-#### To configure a Kubernetes Load Balancer, you need to define a Service in a YAML configuration file with the type field set to LoadBalancer. 
+# To configure a Kubernetes Load Balancer, you need to define a Service in a YAML configuration file with the type field set to LoadBalancer. 
 
 Here's an example YAML configuration file for a Load Balancer that exposes a web application:
 

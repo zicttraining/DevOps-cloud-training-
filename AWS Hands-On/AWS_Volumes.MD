@@ -46,7 +46,6 @@ Create new Volume
   ls
 ```
 #### Enlarge the new volume (volume-1) in AWS console and modify from terminal
-
 - modify the new volume in aws console, enlarge capacity from 5GB to 6GB .
 - check if the attached volume is showing the new capacity
 ```

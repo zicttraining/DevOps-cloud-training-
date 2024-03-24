@@ -1,5 +1,4 @@
-#### To install Terraform step by step, follow these instructions:
-
+# To install Terraform step by step, follow these instructions:
 
 1. Download Terraform:
 
@@ -39,6 +38,6 @@
 
 10. Enable Tab Completion (Optional):
 
-   If you use Bash or Zsh, you can enable tab completion for Terraform commands by following specific instructions provided in the search results.
+   #### If you use Bash or Zsh, you can enable tab completion for Terraform commands by following specific instructions provided in the search results.
 
 

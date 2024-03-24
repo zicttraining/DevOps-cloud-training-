@@ -1,4 +1,4 @@
-#### To use Terraform providers, you need to specify the provider configuration in your Terraform configuration files. Here are the basics of creating a provider block:
+# To use Terraform providers, you need to specify the provider configuration in your Terraform configuration files. Here are the basics of creating a provider block:
 
 1. Here is an example of a basic provider block for the AWS provider:
 

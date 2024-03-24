@@ -1,4 +1,4 @@
-### To authenticate Jenkins with EC2 instances, you can use AWS Credentials in Jenkins. 
+# To authenticate Jenkins with EC2 instances, you can use AWS Credentials in Jenkins. 
 
 Here is an example of a Jenkinsfile that uses the withAWS() step to authenticate with AWS and connect to an EC2 instance:
 ```

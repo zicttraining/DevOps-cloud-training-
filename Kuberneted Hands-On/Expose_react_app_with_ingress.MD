@@ -1,5 +1,4 @@
-#### To expose a React app with an NGINX Ingress Controller in Kubernetes, follow these steps:
-
+# To expose a React app with an NGINX Ingress Controller in Kubernetes, follow these steps:
 
 1. Create a Dockerfile for your React app.
 ```

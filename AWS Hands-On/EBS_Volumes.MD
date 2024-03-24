@@ -3,7 +3,6 @@
 Purpose of the this hands-on training is to teach the students how to add or attach an EBS (Elastic Block Storage) volume on an AWS instance, how to extend and resize volumes, and how to create partitions in volumes on running Amazon Linux 2 EC2 instances.
 
 ## Learning Outcomes
-
 At the end of the this hands-on training, you will be able to;
 
 - understand what is the difference between root volume and EBS Volume.

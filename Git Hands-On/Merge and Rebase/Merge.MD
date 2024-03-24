@@ -1,4 +1,4 @@
-### Merge ###
+# Merge
 
 ## To merge changes from one branch into another:
 Check out the branch you want to merge the changes into.
@@ -16,7 +16,6 @@ git merge feature
 bash
 git commit
 ```
-
 
 ### Rebase ###
 
@@ -40,7 +39,6 @@ git rebase --continue
 ```
 git rebase --abort
 ```
-
 
 ## After the rebase is complete, you may need to force-push the changes to the remote repository
 ```

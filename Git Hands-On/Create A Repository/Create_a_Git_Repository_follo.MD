@@ -1,11 +1,12 @@
-##To create a Git repository, follow these steps:
+# To create a Git repository, follow these steps:
+
 Create a new folder for your project.
 Open the folder in Git Bash or your preferred command-line interface.
 Initialize the repository using the git init command:
 ```
 git init
 ```
-##Add files to your project.
+## Add files to your project.
 Stage the files using git add:
 ```
 git add <filename>
@@ -14,7 +15,7 @@ Or stage all files at once:
 ```
 git add .
 ```
-##Commit the changes:
+## Commit the changes:
 ```
 git commit -m "Initial commit"
 ```
@@ -43,7 +44,5 @@ Push your local changes to the remote repository:
 git push -u origin master
 ```
 Replace <git_url> with the URL you copied from GitHub
-2
-4
-.
-These steps will create a new Git repository and help you manage your project's version control.
+
+#### These steps will create a new Git repository and help you manage your project's version control.

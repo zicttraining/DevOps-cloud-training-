@@ -1,4 +1,4 @@
-#### To create a Terraform module, you can follow these steps based on the information from the search results:
+# To create a Terraform module, you can follow these steps based on the information from the search results:
 
 1. Declare Usage of Terraform Modules:
 
@@ -20,7 +20,6 @@ module "terraform_test_module" {
      
      b. The typical structure of a module directory includes 'main.tf', 'variables.tf', 'outputs.tf', and 'README.md'.
      
-     
 3. Specify Module Sources:
 
    a. Terraform modules can be stored locally, in a Terraform registry, or in a source control repository. The 'source' argument in the module block will vary based on the location of the module.
@@ -37,7 +36,6 @@ module "terraform_test_module" {
 
   When adding variables to your module, pay attention to their source, version, and meta-arguments to ensure proper functionality and flexibility.
   
-
 5. Testing and Maintenance:
 
     a. Test your modules to ensure they function as expected and maintain them regularly to keep them up-to-date and efficient.

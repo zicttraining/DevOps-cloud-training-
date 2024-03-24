@@ -1,5 +1,4 @@
-#### To map a Persistent Volume Claim (PVC) to a pod in Kubernetes, you need to define the PVC in the pod's YAML configuration file. 
-
+# To map a Persistent Volume Claim (PVC) to a pod in Kubernetes, you need to define the PVC in the pod's YAML configuration file. 
 
 Here's an example YAML configuration file for a pod that uses a PVC:
 

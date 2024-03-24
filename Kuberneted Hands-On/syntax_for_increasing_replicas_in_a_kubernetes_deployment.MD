@@ -1,4 +1,4 @@
-### To increase the number of replicas in a Kubernetes Deployment, you can use the kubectl scale command. The basic syntax is as follows:
+# To increase the number of replicas in a Kubernetes Deployment, you can use the kubectl scale command. The basic syntax is as follows:
 
 ```
 kubectl scale deployment <deployment-name> --replicas=<number-of-replicas>

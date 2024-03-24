@@ -3,7 +3,6 @@
 Purpose of the this hands-on training is to create Dashboard, Cloudwatch Alarm, configure Events option and set Logging up.
 
 ## Learning Outcomes
-
 At the end of the this hands-on training, you will be able to;
 
 - create Cloudwatch Dashboard.
@@ -30,7 +29,6 @@ At the end of the this hands-on training, you will be able to;
 - Part 5 - Configure Logging with Agent 
 
 ## Part 1 - Prep - Launching an Instance
-
 
 STEP 1 : Create a EC2
 
@@ -250,7 +248,6 @@ def lambda_handler(event, context):
 - Don't forget to change Instance ID in the Code. 
 
 - Click "DEPLOY" button
-
 
 #### Step 3 Testing your function - Create test event
 

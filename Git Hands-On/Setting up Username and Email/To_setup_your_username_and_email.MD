@@ -1,4 +1,4 @@
-### To set up your username and email in GitHub using Git, follow these steps:
+# To set up your username and email in GitHub using Git, follow these steps:
 
 1. Open Git Bash or your preferred command-line interface.
 
@@ -18,4 +18,4 @@
   git config --global --list
 ```
 
-This will display your Git configuration, including your username and email.
+### This will display your Git configuration, including your username and email.

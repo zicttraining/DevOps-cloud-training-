@@ -1,5 +1,4 @@
-#### To set up a Kubernetes cluster with Kubernetes Master and Worker nodes using kubeadm and install Jenkins for CI/CD, follow these steps:
-
+# To set up a Kubernetes cluster with Kubernetes Master and Worker nodes using kubeadm and install Jenkins for CI/CD, follow these steps
 
 1. Set up an AWS EC2 instance for the Kubernetes Master node.
 
@@ -60,7 +59,6 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 ```
 
 8. Install Jenkins on the Master node:
-
 
 # Install Java
 ```

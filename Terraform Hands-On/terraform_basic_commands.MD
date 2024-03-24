@@ -1,5 +1,4 @@
-#### Here are some basic Terraform commands:
-
+# Here are some basic Terraform commands:
 
 1. **'terraform init':** Initialize your working directory for other commands.
 

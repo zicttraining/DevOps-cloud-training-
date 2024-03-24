@@ -63,7 +63,6 @@ Part 6 - Using Data Lifecycle Manager
   ```
 - First copy the Instance ID and then go to EC2 dashboard and click "Snapshot" section from left-hand menu.
 
-
 - Click `create snapshot` button.
 
 Select resource type : Instance

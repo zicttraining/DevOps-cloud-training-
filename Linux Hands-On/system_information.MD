@@ -1,4 +1,4 @@
-### System Information Commands in Linux
+# System Information Commands in Linux
 
 To gather system and hardware information in Linux, you can use various commands. Here are some essential commands:
 

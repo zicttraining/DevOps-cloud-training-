@@ -1,4 +1,4 @@
-### To install Git on a Linux machine, follow these steps:
+# To install Git on a Linux machine, follow these steps:
 Update your package manager to ensure you have the latest packages available:
 For Debian-based distributions (Ubuntu, Mint, etc.), use:
 ```

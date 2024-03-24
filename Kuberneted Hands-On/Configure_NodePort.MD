@@ -1,4 +1,4 @@
-To configure a Kubernetes Service as a NodePort, you need to define a Service in a YAML configuration file with the type field set to NodePort. 
+# To configure a Kubernetes Service as a NodePort, you need to define a Service in a YAML configuration file with the type field set to NodePort. 
 
 Here's an example YAML configuration file for a NodePort Service:
 ```

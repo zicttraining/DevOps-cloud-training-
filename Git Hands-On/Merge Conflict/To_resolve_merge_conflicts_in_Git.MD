@@ -1,4 +1,4 @@
-To resolve merge conflicts in Git, follow these steps:
+# To resolve merge conflicts in Git, follow these steps:
 
 1. Identify the conflicting files:
    ```

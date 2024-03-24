@@ -58,7 +58,7 @@ Please follow below steps to install docker CE on CentoOS server instance. For R
    sudo yum install docker-ce
    ```
 
-   Note: If prompted to accept the GPG key, verify that the fingerprint matches 
+   # Note: If prompted to accept the GPG key, verify that the fingerprint matches 
 060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35, and if so, accept it.
 
 1. Start Docker.
