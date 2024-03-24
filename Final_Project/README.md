@@ -61,7 +61,7 @@ $ terraform apply # Implement resource creation
 
 When the `terraform apply` command finishes, you will get an information on the terminal window like the image below. Save this information and use it in the next section.
 
-![01-create-s3-bucket](./images/01-create-s3-bucket.jpg)
+![01-create-s3-bucket](./Images/01-create-s3-bucket.jpg)
 
 ## 2. Install ECR Repositories, EKS CLuster, VPC ...
 
@@ -74,7 +74,7 @@ On this new server, you are ready to install:
 After installing Docker and Docker Compose, create the following directory:
 
 ```sh
-$ cd DevOps-Demo/Code/infra_provision/EKS-Cluster
+$ cd Final_Project/infra_provision/
 $ terraform init
 $ terraform plan -var-file=variables.tfvars -lock=false
 provider.aws.region
@@ -101,7 +101,7 @@ After you're done with the lab, you'll need to delete the resources to save mone
 - S3 bucket to do remote backend, you need to delete it by going to [s3-backend](./s3-backend/) directory and typing the command:
 
 ```sh
-$ cd DevOps-Demo/Infra_provision/EKS-Cluster
+$ cd /Infra_provision
 $ terraform init
 $ terraform destroy -var-file=variables.tfvars --auto-approve -lock=false
 provider.aws.region
@@ -112,7 +112,7 @@ provider.aws.region
 
 ```
 
-![02-terraform-destroy](./images/02-terraform-destroy.jpg)
+![02-terraform-destroy](./Images/02-terraform-destroy.jpg)
 
 - Delete the Jenkins server, this you can do manually just like when you created it.
 
