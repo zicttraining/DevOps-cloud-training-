@@ -1,4 +1,4 @@
-## To list files and directories in Linux using the command line, you can utilize the 'ls' command. Below are some common usage examples:
+# To list files and directories in Linux using the command line, you can utilize the 'ls' command. Below are some common usage examples:
 
 ### 1. List files and directories in the current directory:
 

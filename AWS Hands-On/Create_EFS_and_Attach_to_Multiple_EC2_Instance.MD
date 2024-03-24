@@ -196,7 +196,6 @@ cat example.txt
 ```
 ### STEP-2: Configure the EC2-2 instance
 
-
 -  Connect to EC2-2 with SSH.
 ```text
 ssh -i .....pem ec2-user@..................

@@ -1,5 +1,4 @@
-### To create a Persistent Volume (PV) in Kubernetes, follow these steps:
-
+# To create a Persistent Volume (PV) in Kubernetes, follow these steps:
 
 1. Create a YAML file for the PV. For example, to create a 1GiB PV using the hostPath provisioner, use the following YAML:
 
@@ -75,6 +74,5 @@ spec:
 ```
 kubectl apply -f pod.yaml
 ```
-
 
 #### Now the Pod will have access to the persistent storage provided by the PV

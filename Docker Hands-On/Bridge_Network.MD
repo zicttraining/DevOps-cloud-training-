@@ -1,4 +1,5 @@
-## Create a bridge network ##
+## Create a bridge network
+
 ```
 sudo yum update -y
 ```
@@ -31,6 +32,5 @@ docker network disconnect <network-name> <container-name>
 ```
 docker network rm <network-name>
 ```
-
 
 These commands will help you manage bridge networks in Docker and allow you to connect containers to the same network for communication purposes.

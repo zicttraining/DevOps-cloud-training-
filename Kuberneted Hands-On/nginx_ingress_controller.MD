@@ -1,5 +1,4 @@
-#### To set up the NGINX Ingress Controller in Kubernetes, follow these steps:
-
+# To set up the NGINX Ingress Controller in Kubernetes, follow these steps:
 
 1. Install the NGINX Ingress Controller using Helm:
 

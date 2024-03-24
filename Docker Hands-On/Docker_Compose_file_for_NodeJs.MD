@@ -1,4 +1,4 @@
-### To create a Docker Compose file for a Node.js application, follow these steps:
+## To create a Docker Compose file for a Node.js application, follow these steps:
 
 1. Create a new file named docker-compose.yml in the root directory of your project
 
@@ -27,7 +27,6 @@ volumes:
   db_data:
 ```
 
-
 3. Replace myapp with the name of your database.
 
 4. Save the docker-compose.yml file.
@@ -39,8 +38,8 @@ docker-compose up
 
 
 
-###  To specify the configuration for a Node.js application in a Docker Compose file, you can use the environment section to set environment variables for the services. For example, you can set the NODE_ENV environment variable to production for the app service by adding the following line to the environment section:
+### To specify the configuration for a Node.js application in a Docker Compose file, you can use the environment section to set environment variables for the services. For example, you can set the NODE_ENV environment variable to production for the app service by adding the following line to the environment section:
 
 - NODE_ENV=production
 
-This will set the NODE_ENV environment variable to production for the app service
+#### This will set the NODE_ENV environment variable to production for the app service

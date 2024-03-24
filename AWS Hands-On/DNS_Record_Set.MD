@@ -10,7 +10,6 @@ At the end of the this hands-on training, you will be able to;
 
 - manage the domain name routing
 
-
 ## Outline
 
 - Part 1 - Prep.
@@ -100,6 +99,7 @@ systemctl enable httpd
 - Use upload from your computer.
 
 ## Part 2 - Getting familiar with Route 53 Public Hosted Zone, SOA, NS. 
+
 Explain that Public hosted Zone and permanent records SOA nad NS. 
              you may also transfer the SOA ans NS records
              you may also create Private Hosted zone. 
@@ -267,6 +267,7 @@ tab seen bottom
 - show the content of web page. It is the same as S3 static web hosting page.
 
 ### STEP 3: Cleaning 
+
 - Delete CloudFormation Stack
 - Delete Instances.
 - Delete bucket 

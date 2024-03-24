@@ -1,7 +1,6 @@
 ##### Configuring Cloudfront with Route53, ACM and S3 as Static Website
 
 ## Part 1 - Creating a Certificate
-
 - Go to Certificate Manager service and select "Provision Certificates" ----> "Get Started"
 
 - Click on "Request a public certificate" and hit the "Request Certificate"
@@ -30,9 +29,7 @@
 - It takes a while to be ready.  
 
 ## Part 2 - Creating a Static WebSite Hosting
-
 1. Go to S3 service and create a bucket with domain name: "[your-donamin-name].net"
-
 - Public Access Enabled
 - Upload Files named "index.html" and "image.jpg" in "v1" folder
 - Permissions>>> Bucket Policy >>> Paste bucket Policy
@@ -55,7 +52,6 @@
 - Properties >>> Set Static Web Site >>> Enable >>> Index document : index.html
 
 ## Part 3 - Create CloudFront Distribution
-
 - First of all we need to copy endpoint of S3 static website bucket.
 
 - Go to the S3 service click on S3 static website bucket >>> Properties >>> Static Web Hosting >>> Copy the endpoint (without https://).
@@ -82,7 +78,6 @@
 - When it is deployed, copy the "Domain name" of the distribution. 
 
 ## Part 4 - Creating Route 53 record sets (Alias)
-
 - click your Domain name's public hosted zone
 
 - click "create record"
@@ -112,7 +107,6 @@ tab seen bottom
 - show the content of web page.
 
 ## Part 5 - Configuring CloudFront Distribution
-
 Step-1 - Invalidation
 
 - Go to your S3 bucket hosting the website and put the "image.jpg" file in the folder within your bucket. 

@@ -1,5 +1,4 @@
-### To create a Persistent Volume (PV) in Kubernetes, follow these steps:
-
+# To create a Persistent Volume (PV) in Kubernetes, follow these steps:
 
 1.  Create a YAML configuration file for the PV. For example:
 

@@ -1,8 +1,8 @@
-## Integration Kubernetes with Jenkins
+# Integration Kubernetes with Jenkins
 
 # *Jenkins CI Job:* `Deploy_on_Kubernetes-CI`
 
-### Pre-requisites
+## Pre-requisites
 
 1. Jenkins server 
 1. Ansible server

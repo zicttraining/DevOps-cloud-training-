@@ -1,4 +1,4 @@
-### To install Terraform on Linux using a zip archive, follow these steps:
+# To install Terraform on Linux using a zip archive, follow these steps:
 
 1. Download Terraform:
 
@@ -16,6 +16,6 @@
 
    Ensure Terraform is successfully installed by running 'terraform -version' to display the installed version.
 
-By following these steps, you can install Terraform on your Linux system using a zip archive and start managing your infrastructure efficiently.
+#### By following these steps, you can install Terraform on your Linux system using a zip archive and start managing your infrastructure efficiently.
   
 

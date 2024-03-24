@@ -48,7 +48,6 @@ Tag:
     - Key   : Name
       Value : ASGSecGroup
 ```
-
 - Click `Create Security Group` button.
 
 ## Part 2 - Create Target Group
@@ -84,14 +83,12 @@ Tag:
       Interval                : 10 seconds
       Success codes           : 200
       ```
-
   - Tags
 
     ```text
     Key                     : Name
     Value                   : MyTargetGroup
     ```
-
 - Click next >>>Register targets
    *** Unlike Application Load Balancer hands-on, do not register any instances into the target group.
 
@@ -586,13 +583,11 @@ Remove --- 1 ---- Capacity Unit
 An Then wait   : 200
 ```
 
-
 - Delete the Step Polices
 
 - Step 5: Show target Tracking Policy
 
 - Go to `Auto Scaling Groups` --> click `First-AS-Group` --> `Automatic Scaling` -----> `Create dynamic scaling policy`
-
 
 - Click `Add-Policy`;
 

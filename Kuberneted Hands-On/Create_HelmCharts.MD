@@ -1,4 +1,4 @@
-#### To create a Helm chart from scratch, follow these steps:
+# To create a Helm chart from scratch, follow these steps:
 
 1. Create a new chart directory using the helm create command:
 ```

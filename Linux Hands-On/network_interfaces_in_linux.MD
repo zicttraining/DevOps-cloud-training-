@@ -1,5 +1,4 @@
-### To check network interfaces in Linux, you can use various commands. Here are some common methods based on the provided search results. 
-
+# To check network interfaces in Linux, you can use various commands. Here are some common methods based on the provided search results. 
 
 1. Using ifconfig Command (Deprecated but Commonly Used):
   
@@ -49,6 +48,7 @@
     tcpdump: Capture and analyze network traffic.
     ss: Replacement for netstat, providing socket-related information.
 ```
+
 #### These commands provide various ways to check and manage network interfaces on a Linux system. Choose the appropriate command based on your specific requirements and the level of detail you need about the network configuration.
 
 

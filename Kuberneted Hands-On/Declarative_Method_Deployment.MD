@@ -1,4 +1,4 @@
-### To create a deployment in Kubernetes using the declarative method, you need to create a YAML file that describes the desired state of the deployment. Here is an example YAML file:
+# To create a deployment in Kubernetes using the declarative method, you need to create a YAML file that describes the desired state of the deployment. Here is an example YAML file:
 
 ```
 apiVersion: apps/v1
@@ -21,8 +21,6 @@ spec:
           ports:
             - containerPort: 80
 ```
-
-
 
 """" This YAML file specifies a deployment named my-deployment with three replicas. The deployment selects pods with the label app: my-app and creates pods using a template with the same label. The template specifies a container named my-container with the image my-image:latest and exposes port 80. """"
 

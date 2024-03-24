@@ -218,10 +218,10 @@ Show that there is no delete option . Instead, we'll use "Drop"
 
 - Try to delete RDS and show that RDS instance again.
 
-   -Show that "Create final snapshot?" option should be "Unchecked"
-       
+   -Show that "Create final snapshot?" option should be "Unchecked"     
+
               "I acknowledge...." flag is "Checked"
 
  - Type "delete me" nad Click "Delete".
 
- - Show that Automated Backups are deleted also.
+#### Show that Automated Backups are deleted also.

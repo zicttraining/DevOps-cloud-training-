@@ -1,5 +1,4 @@
-### File Manipulation Commands in Linux
-
+# File Manipulation Commands in Linux
 
 File manipulation commands in Linux are essential for creating, viewing, copying, moving, and deleting files and directories efficiently. Here are some fundamental commands:
 

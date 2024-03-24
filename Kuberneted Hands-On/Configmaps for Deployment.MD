@@ -1,7 +1,6 @@
-#### To create a Kubernetes ConfigMap, you can use various methods such as kubectl command-line, configuration files, or generators like Kustomize. 
+# To create a Kubernetes ConfigMap, you can use various methods such as kubectl command-line, configuration files, or generators like Kustomize. 
 
 Here's a summary of the steps to create a Kubernetes ConfigMap using the kubectl command-line:
-
 
 1.  Create ConfigMap Using kubectl:
 
@@ -58,7 +57,6 @@ spec:
               name: my-config
               key: config.txt
 ```
-
 
 #### These steps demonstrate how to create, verify, view, and use a Kubernetes ConfigMap using the kubectl command-line tool
       

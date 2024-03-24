@@ -1,4 +1,4 @@
-To work with Docker, you can use the following basic commands:
+# To work with Docker, you can use the following basic commands:
 
 1. Check Docker version:
 ```
@@ -43,5 +43,4 @@ To work with Docker, you can use the following basic commands:
     docker system prune
 ```
 
-
-These commands will help you manage Docker images and containers
+#### These commands will help you manage Docker images and containers

@@ -1,4 +1,4 @@
-### To install Jenkins on a Linux machine, follow these steps:
+# To install Jenkins on a Linux machine, follow these steps:
 
 1. Update the system packages:
 ```

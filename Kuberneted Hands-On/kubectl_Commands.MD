@@ -1,4 +1,4 @@
-### Here are some basic kubectl commands for Kubernetes:
+# Here are some basic kubectl commands for Kubernetes:
 
 1. Create a Namespace:
 ```

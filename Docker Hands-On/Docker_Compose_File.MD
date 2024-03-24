@@ -34,5 +34,4 @@ volumes:
 docker-compose up
 ```
 
-
 #### This will build and start the containers defined in the docker-compose.yml file. The app service will be built using the Dockerfile in the current directory, and the db service will use the mysql:5.7 image from Docker Hub. The volumes section defines a named volume for the database data. The environment section sets environment variables for the services. The ports section maps port 3000 on the host to port 3000 in the app container. The volumes section mounts the current directory as a volume in the app container

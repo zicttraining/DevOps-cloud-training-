@@ -3,7 +3,6 @@
 Purpose of the this hands-on training is to give basic understanding of how to use IAM and IAM components.
 
 ## Learning Outcomes
-
 At the end of the this hands-on training, students will be able to;
 
 - understand root user and IAM user
@@ -88,7 +87,6 @@ At the end of the this hands-on training, students will be able to;
 
   Click User>>>>> Select user---->>Security Credential--->> Go Access keys ---> Deactivate---->> Delete --->>>Create new 
 
-
 ##  Part 4 - Creating role and attaching to EC2
 
 - Create a role :
@@ -146,4 +144,5 @@ systemctl start httpd
 - Security Group: HTTP & SSH Allowed
 
 ```
-- Show that the instance without role wasn't able to access S3 bucket. So the web page couldn't fetch the index.html and cat.jpg file.
+
+#### Show that the instance without role wasn't able to access S3 bucket. So the web page couldn't fetch the index.html and cat.jpg file.

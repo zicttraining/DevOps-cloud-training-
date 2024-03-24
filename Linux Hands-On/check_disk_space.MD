@@ -1,4 +1,4 @@
-#### Checking disk space is an essential task for system administrators. Here are some Linux commands to check disk space:
+# Checking disk space is an essential task for system administrators. Here are some Linux commands to check disk space:
 
 1. df: The df command stands for "disk-free" and shows available and used disk space on the Linux system. It displays the amount of disk space available on the filesystem with each file name's argument.
 

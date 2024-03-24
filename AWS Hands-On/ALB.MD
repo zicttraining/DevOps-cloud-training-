@@ -274,4 +274,4 @@ Successfully created load balancer!
 - Show the changing Public and Private IP addresses and time that the instances was created
 ```
 
-- Explain the monitoring dashboard of ALB.
+#### Explain the monitoring dashboard of ALB.

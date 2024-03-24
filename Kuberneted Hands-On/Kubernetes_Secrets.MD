@@ -1,7 +1,6 @@
-#### To create a Kubernetes secret, you can use various methods such as kubectl command-line, configuration files, or generators like Kustomize. 
+# To create a Kubernetes secret, you can use various methods such as kubectl command-line, configuration files, or generators like Kustomize. 
 
 Here's a summary of the steps to create a Kubernetes secret using the kubectl command-line:
-
 
 1. Create Secret Using kubectl:
      
@@ -47,7 +46,6 @@ kubectl create secret generic my-secret --from-file=./username.txt --from-file=.
 ```
    kubectl edit secrets my-secret
 ```
-
 
 #### These steps demonstrate how to create, verify, view, decode, and edit a Kubernetes secret using the kubectl command-line tool.
 
