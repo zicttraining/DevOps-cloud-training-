@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+    
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to build')
+        string(name: 'ENVIRONMENT', defaultValue: 'production', description: 'Deployment environment')
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${params.BRANCH}", url: 'https://github.com/your/repository.git'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh 'npm install' 
+                sh 'npm test'    
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'npm install'      
+                sh 'npm run build'     
+            }
+        }
+        
+        stage('Deploy to EC2') {
+            when {
+                expression { params.ENVIRONMENT == 'production' }
+            }
+            steps {
+                sh 'ssh ec2-user@your-ec2-instance "cd /path/to/application && git pull"'
+                sh 'ssh ec2-user@your-ec2-instance "pm2 restart app"'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline succeeded! Deployment to ${params.ENVIRONMENT} environment completed.'
+        }
+        failure {
+            echo 'Pipeline failed! Deployment to ${params.ENVIRONMENT} environment aborted.'
+        }
+    }
+}
+pipelineTriggers {
+    githubPush()
+}

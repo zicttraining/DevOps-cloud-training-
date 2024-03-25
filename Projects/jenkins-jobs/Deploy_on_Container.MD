@@ -1,7 +1,7 @@
 # Deploy on a docker container using Jenkins 
 # `Deploy_on_Container`
 
-### Pre-requisites
+## Pre-requisites
 
 1. Jenkins server 
 1. Docker-host server 
@@ -14,6 +14,7 @@
 
    # copy war file on to container 
    COPY ./webapp.war /usr/local/tomcat/webapps
+   
 ### Integration between Docker-host and Jenkins
 
 Install "publish Over SSH"

@@ -12,8 +12,6 @@
 
 ## Part 1 - Getting to know the Apache Web Server
 
-![Apache HTTP Server](./apache-web-server.png)
-
 The Apache HTTP Server, known as Apache, is a free and open-source cross-platform web server software, which is developed and maintained by an open community of developers under the auspices of the Apache Software Foundation.
 
 ## Part 2 - Launching an Amazon Linux 2 EC2 instance and Connect with SSH
