@@ -1,7 +1,7 @@
 variable "region" {
   type        = string
   description = "Region"
-  default     = "eu-west-3"
+  default     = "us-west-2"
 }
 
 variable "vpc_cidr_block" {
