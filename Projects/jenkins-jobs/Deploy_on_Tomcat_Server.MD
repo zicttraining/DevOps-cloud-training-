@@ -1,7 +1,7 @@
 # Deploy on a Tomcat server
 # *Jenkins Job name:* `Deploy_on_Tomcat_Server`
 
-### Pre-requisites
+## Pre-requisites
 
 1. Jenkins server 
 2. Tomcat Server 
