@@ -1,0 +1,24 @@
+# values.yaml
+replicaCount: 3
+
+image:
+  repository: your-docker-repo/my-flask-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  hosts:
+    - host: your-domain.com
+      paths: ["/"]
+
+secret:
+  database_url: "your-database-url"
+
+configmap:
+  environment_variables:
+    KEY: VALUE
