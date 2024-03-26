@@ -1,0 +1,4 @@
+# Chart.yaml
+name: my-app
+version: 0.1.0
+description: A Helm chart for deploying a Python Flask application
