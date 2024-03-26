@@ -1,0 +1,4 @@
+node_modules
+build
+Jenkins-Server-TF/.terraform
+Jenkins-Server-TF/.terraform/providers/registry.terraform.io/hashicorp/aws/5.41.0/darwin_amd64/terraform-provider-aws_v5.41.0_x5
