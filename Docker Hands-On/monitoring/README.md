@@ -33,7 +33,7 @@ In the terminal, navigate to the cloned project directory if you're not already 
 
 Use Docker Compose to start all services
 
-docker-compose up -d
+sudo docker-compose up -d
 
 
 
@@ -47,7 +47,7 @@ Check the status of the containers:
 
 View Logs:
 
-docker-compose logs -f
+sudo docker-compose logs -f
 
 
 Step 6: Test the Application
@@ -67,3 +67,6 @@ Ensure that the content in the html directory is being served correctly.
 Test Nginx Exporter:
 
 Open your web browser and navigate to http://localhost:9113/metrics to ensure the Nginx Prometheus Exporter is functioning.
+
+To destroy
+sudo docker compose down 
