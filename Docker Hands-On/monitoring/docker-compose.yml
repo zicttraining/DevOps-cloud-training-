@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - webapp-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - webapp-network
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+
+networks:
+  webapp-network:
+    driver: bridge
+
+---
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-container
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./html:/usr/share/nginx/html
+    depends_on:
+      - redis
+      - mysql
+    networks:
+      - webapp-network
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    networks:
+      - webapp-network
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - webapp-network
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: nginx-exporter
+    ports:
+      - "9113:9113"
+    command: ["-nginx.scrape-uri", "http://localhost:80/stub_status"]
+    depends_on:
+      - nginx
+    networks:
+      - webapp-network
+
+networks:
+  webapp-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
