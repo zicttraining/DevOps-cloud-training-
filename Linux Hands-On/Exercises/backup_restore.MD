@@ -27,7 +27,8 @@ Solution: Step-by-Step Commands
 3. Backup Configuration Files
         ◦ Copy the Apache, MySQL, and network configuration files into the new backup directory:
        
-    ```   cp /etc/apache2/apache2.conf /root/backup_$(date +%F)/
+    ``` 
+       cp /etc/apache2/apache2.conf /root/backup_$(date +%F)/
        cp /etc/mysql/my.cnf /root/backup_$(date +%F)/
        cp /etc/network/interfaces /root/backup_$(date +%F)/
     ```
