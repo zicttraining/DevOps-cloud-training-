@@ -75,5 +75,6 @@ Solution: Step-by-Step Commands
         ◦ Save the script as backup_config.sh, make it executable, and run it:
     ```   
        chmod +x backup_config.sh
-    ```
+
        ./backup_config.sh
+    ```
