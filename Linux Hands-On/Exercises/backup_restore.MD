@@ -14,7 +14,9 @@ Solution: Step-by-Step Commands
 1. Log in as Root
         ◦ Switch to the root user to gain appropriate permissions:
        
-       ```sudo -i```
+    ```
+      sudo -i
+    ```
 2. Create a Backup Directory
         ◦ Navigate to the /root directory (or any directory reserved for the root user) and create a backup directory with today’s date:
     ```   
