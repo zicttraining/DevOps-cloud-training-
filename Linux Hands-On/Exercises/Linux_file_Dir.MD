@@ -6,14 +6,14 @@ You are managing a Linux server and want to create a simple daily log report to 
 
 Solution: Step-by-Step
     1. Log in as Root
-        ◦ First, gain root privileges:
-    1. 
+        ◦ First, gain root privileges: 
       ```
        sudo -i
       ```
   
     2. Create an Archive Directory
        ◦ Create a directory where archived log files will be stored:
+     
       ```  
        mkdir /root/log-archive
       ```
