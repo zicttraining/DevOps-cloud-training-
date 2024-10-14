@@ -1,4 +1,4 @@
-Scenario: Setting Up a Project Workspace
+**Scenario: Setting Up a Project Workspace**
 You are setting up a workspace for a project on your Linux server. You'll:
     1. Create directories and files for the project.
     2. Copy some files to a backup directory.
