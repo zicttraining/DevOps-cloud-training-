@@ -1,11 +1,11 @@
 **Scenario:** Setting Up a Web Server Environment for a New Client
 You are a system administrator managing a Linux server hosting multiple websites. A new client has signed up, and you need to set up their project environment, including:
-    1. Creating a project folder for the client's website.
-    2. Setting up specific directories for logs, web files, and backups.
-    3. Copying the website’s configuration files to a backup directory.
-    4. Finding specific configuration files when troubleshooting.
-    5. Setting appropriate file permissions so that only the web server (www-data user) can access certain directories.
-    6. Changing ownership of the files and directories to the www-data user, so the web server can handle them.
+1. Creating a project folder for the client's website.
+2. Setting up specific directories for logs, web files, and backups.
+3. Copying the website’s configuration files to a backup directory.
+4. Finding specific configuration files when troubleshooting.
+5. Setting appropriate file permissions so that only the web server (www-data user) can access certain directories.
+6. Changing ownership of the files and directories to the www-data user, so the web server can handle them.
 
 Solution: Step-by-Step Commands
 1. Creating Files and Directories

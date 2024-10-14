@@ -1,10 +1,10 @@
 **Scenario: Setting Up a Project Workspace**
 You are setting up a workspace for a project on your Linux server. You'll:
-    1. Create directories and files for the project.
-    2. Copy some files to a backup directory.
-    3. Find specific files.
-    4. Set permissions for users to access these files.
-    5. Change the ownership of files and directories.
+1. Create directories and files for the project.
+2. Copy some files to a backup directory.
+3. Find specific files.
+4. Set permissions for users to access these files.
+5. Change the ownership of files and directories.
 
 Solution: Step-by-Step Commands
 1. Creating Files and Directories

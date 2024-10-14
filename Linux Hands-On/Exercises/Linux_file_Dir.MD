@@ -1,8 +1,8 @@
 **Scenario: Creating a Daily Report File**
 You are managing a Linux server and want to create a simple daily log report to track system status. Each day, you will:
-    1. Create a new report file.
-    2. Add some basic system information to the file (like date, time, and disk usage).
-    3. View the report.
+1. Create a new report file.
+2. Add some basic system information to the file (like date, time, and disk usage).
+3. View the report.
 
 **Solution: Step-by-Step**
     
