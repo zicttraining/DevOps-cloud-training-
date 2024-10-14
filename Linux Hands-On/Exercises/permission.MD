@@ -10,12 +10,12 @@ Solution: Step-by-Step Commands
 1. Creating Files and Directories
     • Create a main project directory called project in the /home/user/ directory:
     ``` 
-      mkdir /home/user/project
-    ``
+      mkdir -p  /home/user/project
+    ```
     • Create subdirectories inside project for organization:
     ```  
-      mkdir /home/user/project/docs
-      mkdir /home/user/project/code
+      mkdir -p  /home/user/project/docs
+      mkdir -p  /home/user/project/code
     ```
     • Create a new file in the docs directory:
     ```  
