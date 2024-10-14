@@ -1,4 +1,4 @@
-Scenario: Setting Up a Web Server Environment for a New Client
+**Scenario:** Setting Up a Web Server Environment for a New Client
 You are a system administrator managing a Linux server hosting multiple websites. A new client has signed up, and you need to set up their project environment, including:
     1. Creating a project folder for the client's website.
     2. Setting up specific directories for logs, web files, and backups.
