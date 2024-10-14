@@ -1,11 +1,11 @@
 Step 1: Ensure Docker and Docker Compose are Installed
 Check Docker Installation:
 
-Run docker --version to check if Docker is installed.
+```Run docker --version``` to check if Docker is installed.
 If not installed, follow the Docker installation guide for your operating system.
 Check Docker Compose Installation:
 
-Run docker-compose --version to check if Docker Compose is installed.
+```Run docker-compose --version``` to check if Docker Compose is installed.
 If not installed, follow the Docker Compose installation guide for your operating system.
 
 
@@ -16,7 +16,7 @@ Clone the Repository:
 Navigate to the directory where you want to clone the project.
 Use the following command to clone the repository (replace your-repo-url with the actual repository URL):
 
-git clone https://github.com/zicttraining/DevOps-cloud-training-.git
+```git clone https://github.com/zicttraining/DevOps-cloud-training-.git```
 
 cd DevOps-cloud-training-/Docker Hands-On/Monitoring$
 
@@ -33,21 +33,21 @@ In the terminal, navigate to the cloned project directory if you're not already 
 
 Use Docker Compose to start all services
 
-sudo docker-compose up -d
+```sudo docker compose up -d```
 
 
 
 The -d flag runs the services in detached mode (in the background).
 Step 5: Verify the Containers
 Check the Status of Containers:
-
+``` sudo docker compose ps ```
 Run the following command to see the status of the running containers:
 Step 6: Verify the Containers
 Check the status of the containers:
 
 View Logs:
 
-sudo docker-compose logs -f
+```sudo docker-compose logs -f```
 
 
 Step 6: Test the Application
@@ -69,4 +69,4 @@ Test Nginx Exporter:
 Open your web browser and navigate to http://localhost:9113/metrics to ensure the Nginx Prometheus Exporter is functioning.
 
 To destroy
-sudo docker compose down 
+```sudo docker compose down ```
