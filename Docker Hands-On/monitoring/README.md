@@ -1,11 +1,11 @@
 Step 1: Ensure Docker and Docker Compose are Installed
 Check Docker Installation:
 
-Run docker --version to check if Docker is installed.
+```Run docker --version``` to check if Docker is installed.
 If not installed, follow the Docker installation guide for your operating system.
 Check Docker Compose Installation:
 
-Run docker-compose --version to check if Docker Compose is installed.
+```Run docker-compose --version``` to check if Docker Compose is installed.
 If not installed, follow the Docker Compose installation guide for your operating system.
 
 
