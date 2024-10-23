@@ -2,7 +2,7 @@
     **Step 1: Update the System**
     Open a terminal and run the following command to update your package lists:
 
-    ```sudo apt update```
+            ```sudo apt update```
     Step 2: Install Apache
     Install Apache by running the following command:
 
