@@ -14,7 +14,9 @@ Solution: Step-by-Step Commands
 1. Log in as Root
         ◦ Switch to the root user to gain appropriate permissions:
        
-       ```sudo -i```
+    ```
+      sudo -i
+    ```
 2. Create a Backup Directory
         ◦ Navigate to the /root directory (or any directory reserved for the root user) and create a backup directory with today’s date:
     ```   
@@ -25,7 +27,8 @@ Solution: Step-by-Step Commands
 3. Backup Configuration Files
         ◦ Copy the Apache, MySQL, and network configuration files into the new backup directory:
        
-    ```   cp /etc/apache2/apache2.conf /root/backup_$(date +%F)/
+    ``` 
+       cp /etc/apache2/apache2.conf /root/backup_$(date +%F)/
        cp /etc/mysql/my.cnf /root/backup_$(date +%F)/
        cp /etc/network/interfaces /root/backup_$(date +%F)/
     ```
@@ -73,7 +76,9 @@ Solution: Step-by-Step Commands
        echo "Backup completed at $BACKUP_DIR"
     ```
         ◦ Save the script as backup_config.sh, make it executable, and run it:
+   
     ```   
        chmod +x backup_config.sh
-    ```
+
        ./backup_config.sh
+    ```
