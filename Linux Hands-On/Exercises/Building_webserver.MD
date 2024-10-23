@@ -116,4 +116,4 @@
 
     ```sudo systemctl restart apache2```
     Step 11: Test Your Website
-    Open a web browser and visit http://<your-server-IP>/mywebsite/index.html. You should see your homepage with styled h1 and h2 elements and a button. Click the button to navigate to Page 2.
+    Open a web browser and visit http://your-server-Public-IP/mywebsite/index.html. You should see your homepage with styled h1 and h2 elements and a button. Click the button to navigate to Page 2.
