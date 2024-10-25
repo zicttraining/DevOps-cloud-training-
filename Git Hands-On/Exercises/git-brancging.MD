@@ -30,7 +30,7 @@ Verify that you are on the new branch:
 You should see a list of branches with an asterisk (*) next to feature-update, indicating you are currently on this branch.
 
 **Step 4: Add a New HTML File in the Branch**
-Create a new HTML file:
+**Create a new HTML file:**
 
 ```code form.html```
 
@@ -82,9 +82,9 @@ Create a new HTML file:
 ```
 
 
-```Update styles.css to Add Form Styling```
+**Update styles.css to Add Form Styling**
 
-```Open styles.css for editing:```
+**Open styles.css for editing:**
 
 ``` code styles.css```
 
