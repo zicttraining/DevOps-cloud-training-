@@ -196,7 +196,7 @@ Open a web browser and navigate to the GitHub repository where you pushed the br
 
 **2. Switch to the ```feature-update``` Branch**
 
-You should see a message stating that "feature-update branch had recent pushes".
+You should see a message stating that **"feature-update branch had recent pushes".**
 Alternatively, go to the Branches dropdown list and select your newly created branch feature-update.
 
 ***3. Click on "Compare & Pull Request"**
@@ -206,7 +206,7 @@ If you don’t see the prompt, click on the "Pull requests" tab in your reposito
 
 **4. Add a Pull Request Title and Description**
 
-Title: Write a descriptive title, such as "Add new feature page".
+Title: Write a descriptive title, such as  **"Add new feature page".**
 Description: Add a detailed description of the changes you made. Explain why these changes are necessary, and what files or features were updated.
 
 **5. Review the Changes**
@@ -214,7 +214,7 @@ Scroll down to review the changes you made. GitHub shows a list of commits and a
 
 **6. Assign Reviewers and Labels**
 
-If you are working in a team, you can assign reviewers to the pull request or add labels (such as "feature" or "enhancement") to indicate the type of changes.
+If you are working in a team, you can assign reviewers to the pull request or add labels (such as **"feature" or "enhancement")** to indicate the type of changes.
 This helps team members understand the context of your changes.
 
 **7. Create the Pull Request**
@@ -227,7 +227,7 @@ After creating the pull request, the maintainers or team members will review you
 
 **9. Merge the Pull Request**
 
-Once your pull request is approved, you or a project maintainer can merge it into the target branch ( master).
+Once your pull request is approved, you or a project maintainer can merge it into the target branch `( master).`
 To merge the pull request:
 Click the "Merge pull request" button.
 Confirm the merge by clicking "Confirm merge".
