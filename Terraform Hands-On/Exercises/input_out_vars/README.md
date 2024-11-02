@@ -66,7 +66,8 @@ This main file creates a VPC, a subnet, and an EC2 instance, using the variables
 
 copy below code nd paste in there 
 
-``
+
+```
 # Provider Configuration
 provider "aws" {
   region = "us-west-2"
@@ -161,7 +162,7 @@ output "instance_public_ip" {
   depends_on  = [aws_instance.example]
 }
 
-``
+```
 
 **Step 2: Initialize and Deploy the Infrastructure**
 
