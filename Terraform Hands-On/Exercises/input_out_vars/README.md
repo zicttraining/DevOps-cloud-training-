@@ -14,7 +14,8 @@ create a file called varaibles.tf
 
 copy below code and paste in varaibles.tf  file
 
-``
+
+```
 variable "vpc_cidr" {
   type        = string
   description = "CIDR block for the VPC"
@@ -54,7 +55,8 @@ variable "custom_tags" {
   }
 }
 
-``
+```
+
 create a file called main.tf your main terraform code 
 File: main.tf
 
