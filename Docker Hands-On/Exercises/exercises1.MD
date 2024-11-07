@@ -17,9 +17,13 @@ Run an Nginx container attached to the my_network network. This container will a
 ```docker run -d --name my-nginx --network my_network -p 8080:80 nginx```
 
 ``-d:`` Run the container in detached mode.
+
 ``--name my-nginx:`` Names the container my-nginx for easy reference.
+
 ``--network my_network: `` Connects the container to my_network.
+
 ``-p 8080:80:`` Maps port 80 in the container to port 8080 on localhost.
+
 Now, Nginx is running and serving content on localhost:8080.
 
 Verify Nginx is Running
