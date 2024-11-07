@@ -1,13 +1,16 @@
 **Objective**
+
 Run an Nginx container that serves content on localhost, and use a separate curl container to make HTTP requests to it. This exercise will demonstrate inter-container communication on the same Docker network.
 
 **Setup Overview**
+
 Start an Nginx container that serves content on localhost.
 Use curl inside a separate container to request content from the Nginx container through localhost.
 
 **Steps**
 
 **Step 1: Run the Nginx Container** 
+
 Run an Nginx container attached to the my_network network. This container will act as a web server.
 
 
@@ -60,6 +63,7 @@ docker rm my-nginx
 ```
 
 **Summary**
+
 In this exercise, you:
 
 Deployed an Nginx server in a Docker container.
