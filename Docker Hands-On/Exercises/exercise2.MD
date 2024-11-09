@@ -9,11 +9,13 @@ Start by creating a folder structure for the project:
   cd my-nginx
 ``
 
+``
 my-nginx/
 ├── Dockerfile
 ├── nginx.conf
 └── html/
     └── index.html
+``    
 
 
 **2. Dockerfile**
