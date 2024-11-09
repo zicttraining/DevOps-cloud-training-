@@ -4,10 +4,11 @@ Here's a guide to creating a custom Dockerfile for Nginx, adding a configuration
 
 Start by creating a folder structure for the project:
 
-`` mkdir my-nginx
+``` 
+mkdir my-nginx
 
-  cd my-nginx
-``
+cd my-nginx
+```
 
 ``
 my-nginx/
