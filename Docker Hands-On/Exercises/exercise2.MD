@@ -13,7 +13,9 @@ cd my-nginx
 ``
 my-nginx/
 ├── Dockerfile
+
 ├── nginx.conf
+
 └── html/
     └── index.html
 ``    
