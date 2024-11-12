@@ -1,4 +1,6 @@
 # ACM Certificate for HTTPS with domain bmeevent.com
+# Uncomment the following block and ensure ACM certificate validation is set up correctly if you want to use HTTPS.
+
 # resource "aws_acm_certificate" "bme_uat_app_cert" {
 #   domain_name       = "bmeevent.com"
 #   validation_method = "DNS"
@@ -6,6 +8,7 @@
 # }
 
 # Route 53 Record for DNS-based certificate validation
+# Uncomment if you need certificate validation.
 # resource "aws_route53_record" "cert_validation" {
 #   for_each = {
 #     for dvo in aws_acm_certificate.bme_uat_app_cert.domain_validation_options : dvo.domain_name => {
@@ -21,20 +24,21 @@
 #   ttl     = 60
 # }
 
-# Validates the ACM certificate using the DNS records
+# Validate ACM Certificate using DNS
+# Uncomment if using HTTPS with DNS validation for ACM.
 # resource "aws_acm_certificate_validation" "bme_uat_app_cert_validation" {
 #   certificate_arn         = aws_acm_certificate.bme_uat_app_cert.arn
 #   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 # }
 
-# Hosted Zone for bmeevent.com domain
+# Hosted Zone for the domain bmeevent.com
 resource "aws_route53_zone" "bmeevent_zone" {
   name = "bmeevent.com"
 }
 
 # Public EC2 Instance in a Public Subnet
 resource "aws_instance" "bme_uat_app" {
-  ami                         = "ami-xxxxxxx" # Replace with a valid AMI ID
+  ami                         = "ami-066a7fbea5161f451" # Replace with a valid AMI ID
   instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.public_subnet_1.id
   security_groups             = [aws_security_group.vpc_web_sg.id] # Ensure this security group is declared
@@ -56,10 +60,10 @@ resource "aws_lb" "bme_uat_app_lb" {
 
 # Target Group pointing to the EC2 instance
 resource "aws_lb_target_group" "bme_uat_app_tg" {
-  name       = "bme-uat-app-tg"
-  port       = 80
-  protocol   = "HTTP"
-  vpc_id     = aws_vpc.bme_uat_app.id
+  name        = "bme-uat-app-tg"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.bme_uat_app.id
   target_type = "instance"
 
   health_check {
@@ -81,7 +85,7 @@ resource "aws_lb_target_group_attachment" "bme_uat_app_tg_attachment" {
   port             = 80
 }
 
-# HTTP Listener redirects traffic to HTTPS
+# HTTP Listener to redirect traffic to HTTPS
 resource "aws_lb_listener" "bme_uat_app_http_listener" {
   load_balancer_arn = aws_lb.bme_uat_app_lb.arn
   port              = 80
@@ -98,13 +102,14 @@ resource "aws_lb_listener" "bme_uat_app_http_listener" {
 }
 
 # HTTPS Listener for secure traffic with ACM certificate
+# Uncomment if you are using HTTPS and have a validated ACM certificate.
 # resource "aws_lb_listener" "bme_uat_app_https_listener" {
 #   load_balancer_arn = aws_lb.bme_uat_app_lb.arn
 #   port              = 443
 #   protocol          = "HTTPS"
 #   ssl_policy        = "ELBSecurityPolicy-2016-08"
 #   certificate_arn   = aws_acm_certificate.bme_uat_app_cert.arn
-
+#
 #   default_action {
 #     type             = "forward"
 #     target_group_arn = aws_lb_target_group.bme_uat_app_tg.arn
@@ -122,3 +127,4 @@ resource "aws_route53_record" "bme_uat_app_record" {
     evaluate_target_health = true
   }
 }
+
