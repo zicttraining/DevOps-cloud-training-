@@ -1,17 +1,9 @@
-# Ensure that the VPC is declared
-resource "aws_vpc" "bme_uat_app" {
-  cidr_block = "10.0.0.0/16"
-  tags = {
-    Name = "bme-uat-app-vpc"
-  }
-}
-
 # Public EC2 Instances (Web Tier)
 resource "aws_instance" "bme_uat_web_1" {
-  ami             = "ami-0c55b159cbfafe1f0"
+  ami             = "ami-066a7fbea5161f451"
   instance_type   = "t3.micro"
   subnet_id       = aws_subnet.public_subnet_1.id
-  security_groups = [aws_security_group.vpc_web_sg.id]
+  vpc_security_group_ids = [aws_security_group.vpc_web_sg.id]
 
   tags = {
     Name = "bme-uat-web-1"
@@ -28,10 +20,10 @@ resource "aws_instance" "bme_uat_web_1" {
 }
 
 resource "aws_instance" "bme_uat_web_2" {
-  ami             = "ami-0c55b159cbfafe1f0"
+  ami             = "ami-066a7fbea5161f451"
   instance_type   = "t3.micro"
   subnet_id       = aws_subnet.public_subnet_2.id
-  security_groups = [aws_security_group.vpc_web_sg.id]
+  vpc_security_group_ids = [aws_security_group.vpc_web_sg.id]
 
   tags = {
     Name = "bme-uat-web-2"
@@ -49,10 +41,10 @@ resource "aws_instance" "bme_uat_web_2" {
 
 # Private EC2 Instances (App Tier)
 resource "aws_instance" "bme_uat_app_1" {
-  ami             = "ami-0c55b159cbfafe1f0"
+  ami             = "ami-066a7fbea5161f451"
   instance_type   = "t3.micro"
   subnet_id       = aws_subnet.private_subnet_1.id
-  security_groups = [aws_security_group.vpc_app_sg.id]
+  vpc_security_group_ids = [aws_security_group.vpc_app_sg.id]
 
   tags = {
     Name = "bme-uat-app-1"
@@ -69,10 +61,10 @@ resource "aws_instance" "bme_uat_app_1" {
 }
 
 resource "aws_instance" "bme_uat_app_2" {
-  ami             = "ami-0c55b159cbfafe1f0"
+  ami             = "ami-066a7fbea5161f451"
   instance_type   = "t3.micro"
   subnet_id       = aws_subnet.private_subnet_2.id
-  security_groups = [aws_security_group.vpc_app_sg.id]
+  vpc_security_group_ids = [aws_security_group.vpc_app_sg.id]
 
   tags = {
     Name = "bme-uat-app-2"
@@ -90,83 +82,61 @@ resource "aws_instance" "bme_uat_app_2" {
 
 # Lambda Function as Application Server
 resource "aws_lambda_function" "bme_uat_app_lambda" {
-  function_name     = "bme-uat-app-lambda"
-  runtime           = "nodejs14.x"
-  handler           = "index.handler"
-  role              = aws_iam_role.bme_uat_app_ec2_role.arn  # Ensure this IAM role is declared
-  filename          = "lambda.zip"
-  source_code_hash  = filebase64sha256("lambda.zip")
+  function_name = "bme-uat-app-lambda"
+  runtime       = "nodejs18.x"         # Ensure the runtime is supported
+  handler       = "index.handler"      # Make sure this matches your code’s entry point
 
-  # VPC configuration for Lambda to access resources in private subnets
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
+  # S3 bucket and key where the Lambda code is stored
+  s3_bucket = "bme-uat-app2"           # Correct bucket name
+  s3_key    = "lambda.zip"             # Path to the Lambda package in S3
+
+  # Ensure the IAM role has permissions for Lambda execution
+  role = aws_iam_role.lambda_execution_role.arn
 }
 
-# Security Groups
-resource "aws_security_group" "vpc_web_sg" {
-  vpc_id = aws_vpc.bme_uat_app.id
+# IAM Role for Lambda Execution
+resource "aws_iam_role" "lambda_execution_role" {
+  name = "bme-uat-app-lambda-role"
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "bme-uat-web-sg"
-  }
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect    = "Allow",
+        Principal = { Service = "lambda.amazonaws.com" },
+        Action    = "sts:AssumeRole"
+      }
+    ]
+  })
 }
 
-resource "aws_security_group" "vpc_app_sg" {
-  vpc_id = aws_vpc.bme_uat_app.id
+# Attach a policy to allow Lambda access to necessary resources
+resource "aws_iam_policy" "lambda_s3_access_policy" {
+  name        = "LambdaS3AccessPolicy"
+  description = "Policy for Lambda to access S3 bucket for code"
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"] # Allow internal traffic
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "bme-uat-app-sg"
-  }
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        Resource = [
+          "arn:aws:s3:::bme-uat-app2",                    # Allow access to the bucket
+          "arn:aws:s3:::bme-uat-app2/lambda.zip"          # Allow access to the specific object
+        ]
+      }
+    ]
+  })
 }
 
-resource "aws_security_group" "lambda_sg" {
-  vpc_id = aws_vpc.bme_uat_app.id
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "bme-uat-lambda-sg"
-  }
+# Attach the policy to the Lambda execution role
+resource "aws_iam_role_policy_attachment" "lambda_s3_access_attachment" {
+  role       = aws_iam_role.lambda_execution_role.name
+  policy_arn = aws_iam_policy.lambda_s3_access_policy.arn
 }
+
+
