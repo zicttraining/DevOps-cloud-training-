@@ -1,31 +1,31 @@
 **Objective**
 
-  *Deploy a three-tier application on EKS.
+  - Deploy a three-tier application on EKS.
 
-  *Use Deployments to manage the frontend, backend, and database.
+  * Use Deployments to manage the frontend, backend, and database.
 
-  *Test the application by curling the frontend service.
+  * Test the application by curling the frontend service.
 
-  *Perform a rolling update for the frontend.
+  * Perform a rolling update for the frontend.
 
 **Prerequisites**
 
-  *An EKS cluster is set up and kubectl is configured to access it. 
+  * An EKS cluster is set up and kubectl is configured to access it. 
 
-  *Docker images for the frontend, backend, and database (e.g., a custom app, Python Flask for the backend, and MySQL database).
+  * Docker images for the frontend, backend, and database (e.g., a custom app, Python Flask for the backend, and MySQL database).
 
-  *Basic understanding of Kubernetes resources.
+  * Basic understanding of Kubernetes resources.
 
    
 **Step 1: Define the Application**
 
 The application has three components:
 
-  *Frontend: Serves the user interface.
+  * **Frontend:** Serves the user interface.
   
-  *Backend: Provides the business logic and interacts with the database.
+  * **Backend:** Provides the business logic and interacts with the database.
   
-  *Database: Stores data.
+  * **Database:** Stores data.
 
 **Step 2: Create the Deployment YAML**
 
@@ -232,10 +232,10 @@ To remove all resources:
 
 Three-Tier Architecture: Separate frontend, backend, and database layers for scalability and modularity.
 
-*Load Balancer: Exposes the frontend service to the internet.
+* **Load Balancer:** Exposes the frontend service to the internet.
 
-*Rolling Updates: Demonstrates updating the frontend without downtime.
+* **Rolling Updates:** Demonstrates updating the frontend without downtime.
 
-*Verification: Validates the deployment with curl.
+* **Verification:** Validates the deployment with curl.
 
 This exercise provides a comprehensive guide to deploying and managing a three-tier application on EKS.
