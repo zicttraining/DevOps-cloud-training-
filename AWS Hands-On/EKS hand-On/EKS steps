@@ -1,4 +1,4 @@
-View this content raw : https://raw.githubusercontent.com/zicttraining/DevOps-cloud-training-/refs/heads/main/AWS%20Hands-On/EKS%20hand-On/EKS%20steps
+View this content raw click on the top right corner
 
 Create an EKS cluster and deploy 2048 game into that cluster
 ==================================================
@@ -67,7 +67,10 @@ kubectl get nodes
 # Install nano editor in cloudshell. We will need this in the next task
 sudo yum install nano -y
 
-
+#FYI: If you're working in a text editor like nano on a Linux or Unix system, here's how to save and exit:
+Press Ctrl + O (the letter O, not zero).
+Press Enter to confirm and save.
+Exit:Press Ctrl + X to exit the editor.
 
 Task 4: Create a new POD in EKS for the 2048 game
 ================================================
