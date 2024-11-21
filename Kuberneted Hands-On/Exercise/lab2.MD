@@ -299,11 +299,11 @@ Check services:
 
 Check StatefulSet and PVCs:
 
-``
+```
 kubectl get statefulset
 kubectl get pvc
 
-``
+```
 
 - Access the frontend application:
 
@@ -311,7 +311,8 @@ kubectl get pvc
   - Get the external IP of the frontend-service:
 
 
-``kubectl get service frontend-service``
+```kubectl get service frontend-service```
+
 
 - Open the IP in a browser.
   - Submit data via the form:
