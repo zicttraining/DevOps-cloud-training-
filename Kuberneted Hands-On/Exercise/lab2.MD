@@ -83,6 +83,7 @@ data:
 
 `` code frontend-deployment.yaml``
 
+
 ``
 apiVersion: apps/v1
 kind: Deployment
@@ -125,6 +126,7 @@ spec:
 
 
 3. **ConfigMap for Django Backend**
+
 
 `` code backend-config.yaml``
 
