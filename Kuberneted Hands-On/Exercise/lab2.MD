@@ -154,7 +154,7 @@ data:
 4. **Backend Deployment**
 
 
-`` code backend.yaml``
+`` code backend-deployment.yaml``
 
 
 ```
