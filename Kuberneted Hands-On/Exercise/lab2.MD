@@ -149,12 +149,13 @@ data:
         }
     }
 
-``
+```
 
 4. **Backend Deployment**
 
 
 `` code backend.yaml``
+
 
 ```
 
@@ -204,7 +205,9 @@ spec:
 
 5. **StatefulSet for MySQL**
 
+
 ``code mysql-statefulset.yaml``
+
 
 ```
 apiVersion: apps/v1
