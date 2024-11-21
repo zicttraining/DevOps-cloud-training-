@@ -84,7 +84,7 @@ data:
 `` code frontend-deployment.yaml``
 
 
-``
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -122,7 +122,7 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-``
+```
 
 
 3. **ConfigMap for Django Backend**
