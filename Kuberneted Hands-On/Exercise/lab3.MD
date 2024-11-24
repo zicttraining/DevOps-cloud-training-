@@ -16,7 +16,7 @@ Ensure the following are ready:
 
 **Step 2: Install Istio Components with Helm**
 
-2.1 Install the Base Component
+- 2.1 Install the Base Component
 This component provides Istio CRDs (Custom Resource Definitions).
 
 
@@ -27,28 +27,28 @@ helm install istio-base istio/base -n istio-system
 
 ```
 
-**2.2 Install Istio CNI**
+- 2.2 Install Istio CNI
 
 The Istio CNI plugin handles pod-level networking and avoids iptables-based sidecar injection.
 
 
 ```helm install istio-cni istio/cni -n kube-system```
 
-**2.3 Deploy Istiod (Control Plane)**
+- 2.3 Deploy Istiod (Control Plane)
 
 Istiod manages configuration and policies for your mesh.
 
 
 ```helm install istiod istio/istiod -n istio-system```
 
-**2.4 Install zTunnel**
+- 2.4 Install zTunnel
 
 zTunnel is the data plane for Ambient Mesh and handles secure traffic routing.
 
 
 ```helm install ztunnel istio/ztunnel -n istio-system```
 
-**2.5 Install an Ingress Gateway (Optional)**
+- 2.5 Install an Ingress Gateway (Optional)
 
 The gateway handles external traffic entering your mesh.
 
