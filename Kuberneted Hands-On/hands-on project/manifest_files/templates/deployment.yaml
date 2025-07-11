@@ -1,0 +1,32 @@
+# templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "my-app.fullname" . }}
+  labels:
+    app: {{ include "my-app.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "my-app.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "my-app.name" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: {{ include "my-app.fullname" . }}-secret
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "my-app.fullname" . }}-configmap
+                  key: DATABASE_URL
