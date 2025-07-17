@@ -1,0 +1,98 @@
+name: AWS Terraform CI/CD
+
+on:
+  push:
+    branches:
+      - develop
+      - uat
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy (production only)'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+
+env:
+  TF_REGION: ${{ secrets.TF_REGION }}
+
+jobs:
+  deploy-dev:
+    name: Deploy to Dev
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform/dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (Dev)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: ${{ env.TF_REGION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+  deploy-uat:
+    name: Deploy to UAT
+    if: github.ref == 'refs/heads/uat'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform/uat
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (UAT)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_UAT }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_UAT }}
+          aws-region: ${{ env.TF_REGION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+  deploy-prod:
+    name: Deploy to Production
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.inputs.environment == 'production'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform/prod
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (Prod)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ${{ env.TF_REGION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
