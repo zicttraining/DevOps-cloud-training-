@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: terraform/dev
+        working-directory: Dev
     steps:
       - uses: actions/checkout@v4
 
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: UAT  # ✅ FIXED
+        working-directory: UAT
     steps:
       - uses: actions/checkout@v4
 
@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Prod  # ✅ FIXED
+        working-directory: Prod
     steps:
       - uses: actions/checkout@v4
 
