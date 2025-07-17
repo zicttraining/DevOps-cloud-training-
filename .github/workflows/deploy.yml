@@ -3,7 +3,7 @@ name: AWS Terraform CI/CD
 on:
   push:
     branches:
-      - '**'  # Allow deployments from any branch (e.g. dev)
+      - '**'
   workflow_dispatch:
     inputs:
       environment:
@@ -26,12 +26,13 @@ on:
 
 jobs:
   deploy:
-    name: Terraform ${{ github.event.inputs.destroy == 'true' && 'Destroy' || 'Deploy' }} to ${{ github.event.inputs.environment }}
+    name: ${{ github.event.inputs.destroy == 'true' && '❌ Destroy' || '✅ Deploy' }} to ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
     defaults:
       run:
         working-directory: ${{ github.event.inputs.environment == 'dev' && 'Dev' || github.event.inputs.environment == 'uat' && 'UAT' || 'Prod' }}
-    environment: ${{ github.event.inputs.environment }}
+
     steps:
       - name: ✨ Checkout Code
         uses: actions/checkout@v4
@@ -39,17 +40,31 @@ jobs:
       - name: ⚖️ Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: 👀 Show Environment Info
-        run: echo "Deploying to: ${{ github.event.inputs.environment }} | Destroy: ${{ github.event.inputs.destroy }}"
-
-      - name: 🔑 Configure AWS Credentials
+      - name: 🔑 Configure AWS Credentials for Dev
+        if: github.event.inputs.environment == 'dev'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-west-2
-          aws-access-key-id: ${{ github.event.inputs.environment == 'dev' && secrets.AWS_ACCESS_KEY_ID_DEV || github.event.inputs.environment == 'uat' && secrets.AWS_ACCESS_KEY_ID_UAT || secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ github.event.inputs.environment == 'dev' && secrets.AWS_SECRET_ACCESS_KEY_DEV || github.event.inputs.environment == 'uat' && secrets.AWS_SECRET_ACCESS_KEY_UAT || secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
 
-      - name: ⚖️ Terraform Init
+      - name: 🔑 Configure AWS Credentials for UAT
+        if: github.event.inputs.environment == 'uat'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-west-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_UAT }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_UAT }}
+
+      - name: 🔑 Configure AWS Credentials for Prod
+        if: github.event.inputs.environment == 'production'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-west-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+
+      - name: ⚙️ Terraform Init
         run: terraform init
 
       - name: 📊 Terraform Plan
@@ -65,7 +80,7 @@ jobs:
         run: terraform destroy -auto-approve
 
   promote-to-uat:
-    name: Promote Dev ➔ UAT
+    name: 🚀 Promote Dev ➡️ UAT
     needs: deploy
     if: github.ref == 'refs/heads/dev' && github.event.inputs.environment == 'uat' && github.event.inputs.destroy != 'true'
     runs-on: ubuntu-latest
@@ -74,36 +89,42 @@ jobs:
         working-directory: UAT
     environment: uat
     steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v3
-      - uses: aws-actions/configure-aws-credentials@v4
+      - name: ✨ Checkout Code
+        uses: actions/checkout@v4
+      - name: ⚖️ Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: 🔑 Configure AWS Credentials for UAT
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_UAT }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_UAT }}
           aws-region: us-west-2
-      - name: Promote Dev to UAT (Auto)
+      - name: 🚀 Promote (Apply Dev to UAT)
         run: |
           terraform init
           terraform apply -auto-approve
 
   deploy-prod:
-    name: Deploy to Production (Manual)
-    if: github.ref == 'refs/heads/main' && github.event.inputs.environment == 'production'
+    name: 🚀 Deploy to Production (Manual)
     needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event.inputs.environment == 'production'
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: Prod
     environment: production
     steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v3
-      - uses: aws-actions/configure-aws-credentials@v4
+      - name: ✨ Checkout Code
+        uses: actions/checkout@v4
+      - name: ⚖️ Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: 🔑 Configure AWS Credentials for Prod
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           aws-region: us-west-2
-      - name: Terraform Init
+      - name: ⚙️ Terraform Init
         run: terraform init
-      - name: Terraform Apply
+      - name: ✅ Terraform Apply
         run: terraform apply -auto-approve
