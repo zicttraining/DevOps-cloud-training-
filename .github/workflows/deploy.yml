@@ -2,130 +2,105 @@ name: AWS Terraform CI/CD
 
 on:
   push:
-    branches:
-      - develop
-      - uat
+    branches-ignore:
+      - main
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy (production only)'
+        description: 'Which environment to deploy or destroy?'
         required: true
-        default: 'production'
+        default: 'uat'
         type: choice
         options:
+          - dev
+          - uat
           - production
       destroy:
         description: 'Destroy infrastructure?'
-        required: false
+        required: true
         default: 'false'
         type: choice
         options:
           - false
           - true
 
+env:
+  REGION: us-west-2
+
 jobs:
-  deploy-dev:
-    name: Deploy to Dev
-    if: github.ref == 'refs/heads/develop'
+  # Auto-deploy Dev on any push
+  dev-auto:
+    name: 🚧 Deploy to Dev (Auto)
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: Dev
     steps:
-      - uses: actions/checkout@v4
+      - name: ⏬ Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials (Dev)
+      - name: 🔐 Configure AWS (Dev)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          aws-region: us-west-2
+          aws-region: ${{ env.REGION }}
 
-      - name: Setup Terraform
+      - name: ⚙️ Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
+      - name: 🧱 Terraform Init
         run: terraform init
 
-      - name: Terraform Plan
-        if: github.event.inputs.destroy != 'true'
+      - name: 🔍 Terraform Plan
         run: terraform plan
 
-      - name: Terraform Apply
-        if: github.event.inputs.destroy != 'true'
+      - name: 🚀 Terraform Apply
         run: terraform apply -auto-approve
 
-      - name: Terraform Destroy
-        if: github.event.inputs.destroy == 'true'
-        run: terraform destroy -auto-approve
-
-  deploy-uat:
-    name: Deploy to UAT
-    if: github.ref == 'refs/heads/uat'
+  # Manual deployments (UAT & Prod)
+  deploy-manual:
+    name: 🚀 Manual Deploy / Destroy
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: UAT
-    steps:
-      - uses: actions/checkout@v4
+        working-directory: ${{ github.event.inputs.environment == 'dev' && 'Dev' || github.event.inputs.environment == 'uat' && 'UAT' || 'Prod' }}
 
-      - name: Configure AWS Credentials (UAT)
+    steps:
+      - name: ⏬ Checkout Code
+        uses: actions/checkout@v4
+
+      - name: ✅ Check Branch Permission
+        run: |
+          echo "Deploying ${{ github.event.inputs.environment }} from ${{ github.ref }}"
+          if [[ "${{ github.event.inputs.environment }}" == "production" && "${{ github.ref }}" != "refs/heads/main" ]]; then
+            echo "❌ ERROR: Production deployments must be run from the main branch"
+            exit 1
+          fi
+
+      - name: 🔐 Configure AWS (Manual)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_UAT }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_UAT }}
-          aws-region: us-west-2
+          aws-access-key-id: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}', github.event.inputs.environment | upper)] }}
+          aws-secret-access-key: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}', github.event.inputs.environment | upper)] }}
+          aws-region: ${{ env.REGION }}
 
-      - name: Setup Terraform
+      - name: ⚙️ Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
+      - name: 🧱 Terraform Init
         run: terraform init
 
-      - name: Terraform Plan
+      - name: 🔍 Terraform Plan
         if: github.event.inputs.destroy != 'true'
         run: terraform plan
 
-      - name: Terraform Apply
+      - name: 🚀 Terraform Apply
         if: github.event.inputs.destroy != 'true'
         run: terraform apply -auto-approve
 
-      - name: Terraform Destroy
+      - name: 🔥 Terraform Destroy
         if: github.event.inputs.destroy == 'true'
         run: terraform destroy -auto-approve
-
-  deploy-prod:
-    name: Deploy to Production
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.event.inputs.environment == 'production'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: Prod
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Configure AWS Credentials (Prod)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: us-west-2
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Plan
-        if: github.event.inputs.destroy != 'true'
-        run: terraform plan
-
-      - name: Terraform Apply
-        if: github.event.inputs.destroy != 'true'
-        run: terraform apply -auto-approve
-
-      - name: Terraform Destroy
-        if: github.event.inputs.destroy == 'true'
-        run: terraform destroy -auto-approve
-        
