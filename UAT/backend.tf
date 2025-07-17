@@ -5,5 +5,6 @@ terraform {
     region         = "us-west-2"                 # Define the appropriate AWS region
     dynamodb_table = "bs101-uat-app-dbb"          # Your DynamoDB table name for state locking
     encrypt        = true                        # Enable encryption for the state file
+    use_lock_table = true              # instead of dynamodb_table
   }
 }
