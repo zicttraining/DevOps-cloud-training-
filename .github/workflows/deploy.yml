@@ -16,31 +16,31 @@ on:
           - production
 
 jobs:
-deploy-dev:
-  name: Deploy to Dev
-  if: github.ref == 'refs/heads/develop'
-  runs-on: ubuntu-latest
-  defaults:
-    run:
-      working-directory: terraform/dev
-  steps:
-    - uses: actions/checkout@v4
+  deploy-dev:
+    name: Deploy to Dev
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Dev  # ✅ FIXED
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Configure AWS Credentials (Dev)
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-        aws-region: us-west-2
+      - name: Configure AWS Credentials (Dev)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: us-west-2
 
-    - name: Terraform Init
-      run: terraform init
+      - name: Terraform Init
+        run: terraform init
 
-    - name: Terraform Plan
-      run: terraform plan
+      - name: Terraform Plan
+        run: terraform plan
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
 
   deploy-uat:
     name: Deploy to UAT
@@ -48,7 +48,7 @@ deploy-dev:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: terraform/uat
+        working-directory: UAT  # ✅ FIXED
     steps:
       - uses: actions/checkout@v4
 
@@ -74,7 +74,7 @@ deploy-dev:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: terraform/prod
+        working-directory: Prod  # ✅ FIXED
     steps:
       - uses: actions/checkout@v4
 
