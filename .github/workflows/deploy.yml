@@ -14,6 +14,14 @@ on:
         type: choice
         options:
           - production
+      destroy:
+        description: 'Destroy infrastructure?'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - false
+          - true
 
 jobs:
   deploy-dev:
@@ -33,17 +41,23 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
           aws-region: us-west-2
 
-      - name: Setup Terraform   # ✅ Add this step
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-        
+
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Plan
+        if: github.event.inputs.destroy != 'true'
         run: terraform plan
 
       - name: Terraform Apply
+        if: github.event.inputs.destroy != 'true'
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: github.event.inputs.destroy == 'true'
+        run: terraform destroy -auto-approve
 
   deploy-uat:
     name: Deploy to UAT
@@ -62,18 +76,23 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_UAT }}
           aws-region: us-west-2
 
-           
-      - name: Setup Terraform   # ✅ Add this step
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Plan
+        if: github.event.inputs.destroy != 'true'
         run: terraform plan
 
       - name: Terraform Apply
+        if: github.event.inputs.destroy != 'true'
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: github.event.inputs.destroy == 'true'
+        run: terraform destroy -auto-approve
 
   deploy-prod:
     name: Deploy to Production
@@ -92,14 +111,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           aws-region: us-west-2
 
-      - name: Setup Terraform   # ✅ Add this step
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Plan
+        if: github.event.inputs.destroy != 'true'
         run: terraform plan
 
       - name: Terraform Apply
+        if: github.event.inputs.destroy != 'true'
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: github.event.inputs.destroy == 'true'
+        run: terraform destroy -auto-approve
