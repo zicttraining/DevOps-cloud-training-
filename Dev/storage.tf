@@ -1,16 +1,16 @@
 # S3 Bucket for application storage with private access
 # S3 Bucket for application storage with private access
-resource "aws_s3_bucket" "bs101-dev_bucket" {
-  bucket = "bs101-dev-app-logs-${random_id.bucket_suffix.hex}"
+resource "aws_s3_bucket" "ssl-dev_bucket" {
+  bucket = "ssl-dev-app-logs-${random_id.bucket_suffix.hex}"
 
   tags = {
-    Name = "bs101-uay-app-logs"
+    Name = "ssl-uay-app-logs"
   }
 }
 
 # Enforce ownership controls on the bucket
-resource "aws_s3_bucket_ownership_controls" "bs101-dev_bucket_ownership_controls" {
-  bucket = aws_s3_bucket.bs101-dev_bucket.id
+resource "aws_s3_bucket_ownership_controls" "ssl-dev_bucket_ownership_controls" {
+  bucket = aws_s3_bucket.ssl-dev_bucket.id
 
   rule {
     object_ownership = "BucketOwnerEnforced"
@@ -52,8 +52,8 @@ resource "aws_iam_policy" "s3_management_policy" {
           "s3:DeleteObject"
         ],
         Resource = [
-          "${aws_s3_bucket.bs101-dev_bucket.arn}",
-          "${aws_s3_bucket.bs101-dev_bucket.arn}/*"
+          "${aws_s3_bucket.ssl-dev_bucket.arn}",
+          "${aws_s3_bucket.ssl-dev_bucket.arn}/*"
         ]
       }
     ]
@@ -67,8 +67,8 @@ resource "aws_iam_role_policy_attachment" "s3_management_role_attachment" {
 }
 
 # Define a bucket policy to enforce ownership and access permissions
-resource "aws_s3_bucket_policy" "bs101-dev_bucket_policy" {
-  bucket = aws_s3_bucket.bs101-dev_bucket.id
+resource "aws_s3_bucket_policy" "ssl-dev_bucket_policy" {
+  bucket = aws_s3_bucket.ssl-dev_bucket.id
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -85,8 +85,8 @@ resource "aws_s3_bucket_policy" "bs101-dev_bucket_policy" {
           "s3:DeleteObject"
         ],
         Resource = [
-          "${aws_s3_bucket.bs101-dev_bucket.arn}",
-          "${aws_s3_bucket.bs101-dev_bucket.arn}/*"
+          "${aws_s3_bucket.ssl-dev_bucket.arn}",
+          "${aws_s3_bucket.ssl-dev_bucket.arn}/*"
         ]
       },
       # Allow CloudTrail to write logs to this bucket
@@ -97,7 +97,7 @@ resource "aws_s3_bucket_policy" "bs101-dev_bucket_policy" {
           Service = "cloudtrail.amazonaws.com"
         },
         Action   = "s3:PutObject",
-        Resource = "${aws_s3_bucket.bs101-dev_bucket.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+        Resource = "${aws_s3_bucket.ssl-dev_bucket.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
         Condition = {
           StringEquals = {
             "s3:x-amz-acl" = "bucket-owner-full-control"
@@ -110,11 +110,11 @@ resource "aws_s3_bucket_policy" "bs101-dev_bucket_policy" {
 
 
 # EBS Volume for additional storage attached to the web server
-resource "aws_ebs_volume" "bs101-dev-app_web_ebs" {
-  availability_zone = "us-west-2a" # Corrected spelling
+resource "aws_ebs_volume" "ssl-dev-app_web_ebs" {
+  availability_zone = "af-south-1a" # Corrected spelling
   size              = 10           # Size in GB
   tags = {
-    Name = "bs101-dev-app-web-ebs"
+    Name = "ssl-dev-app-web-ebs"
   }
 }
 

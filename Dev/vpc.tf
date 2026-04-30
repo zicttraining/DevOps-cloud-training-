@@ -1,67 +1,67 @@
 # Define the VPC
-resource "aws_vpc" "bs101-dev" {
+resource "aws_vpc" "ssl-dev" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "bs101-dev-app-vpc"
+    Name = "ssl-dev-app-vpc"
   }
 }
 
 # Define Public and Private Subnets
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id                  = aws_vpc.bs101-dev.id
+  vpc_id                  = aws_vpc.ssl-dev.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-west-2a"
+  availability_zone       = "af-south-1a"
   map_public_ip_on_launch = true
   tags = {
-    Name = "bs101-dev-app-public-subnet-1"
+    Name = "ssl-dev-app-public-subnet-1"
   }
 }
 
 resource "aws_subnet" "public_subnet_2" {
-  vpc_id                  = aws_vpc.bs101-dev.id
+  vpc_id                  = aws_vpc.ssl-dev.id
   cidr_block              = "10.0.2.0/24"
-  availability_zone       = "us-west-2b"
+  availability_zone       = "af-south-1b"
   map_public_ip_on_launch = true
   tags = {
-    Name = "bs101-dev-app-public-subnet-2"
+    Name = "ssl-dev-app-public-subnet-2"
   }
 }
 
 resource "aws_subnet" "private_subnet_1" {
-  vpc_id            = aws_vpc.bs101-dev.id
+  vpc_id            = aws_vpc.ssl-dev.id
   cidr_block        = "10.0.3.0/24"
-  availability_zone = "us-west-2a"
+  availability_zone = "af-south-1a"
   tags = {
-    Name = "bs101-dev-app-private-subnet-1"
+    Name = "ssl-dev-app-private-subnet-1"
   }
 }
 
 resource "aws_subnet" "private_subnet_2" {
-  vpc_id            = aws_vpc.bs101-dev.id
+  vpc_id            = aws_vpc.ssl-dev.id
   cidr_block        = "10.0.4.0/24"
-  availability_zone = "us-west-2b"
+  availability_zone = "af-south-1b"
   tags = {
-    Name = "bs101-dev-app-private-subnet-2"
+    Name = "ssl-dev-app-private-subnet-2"
   }
 }
 
 # Internet Gateway for public subnets
-resource "aws_internet_gateway" "bs101-dev_igw" {
-  vpc_id = aws_vpc.bs101-dev.id
+resource "aws_internet_gateway" "ssl-dev_igw" {
+  vpc_id = aws_vpc.ssl-dev.id
   tags = {
-    Name = "bs101-dev-app-igw"
+    Name = "ssl-dev-app-igw"
   }
 }
 
 # Public Route Table with route to Internet Gateway
 resource "aws_route_table" "public_rt" {
-  vpc_id = aws_vpc.bs101-dev.id
+  vpc_id = aws_vpc.ssl-dev.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.bs101-dev_igw.id
+    gateway_id = aws_internet_gateway.ssl-dev_igw.id
   }
   tags = {
-    Name = "bs101-dev-app-public-rt"
+    Name = "ssl-dev-app-public-rt"
   }
 }
 
@@ -78,7 +78,7 @@ resource "aws_route_table_association" "public_subnet_assoc_2" {
 
 # Security Groups
 resource "aws_security_group" "vpc_web_sg" {
-  vpc_id = aws_vpc.bs101-dev.id
+  vpc_id = aws_vpc.ssl-dev.id
 
   ingress {
     from_port   = 80
@@ -95,12 +95,12 @@ resource "aws_security_group" "vpc_web_sg" {
   }
 
   tags = {
-    Name = "bs101-dev-web-sg"
+    Name = "ssl-dev-web-sg"
   }
 }
 
 resource "aws_security_group" "vpc_app_sg" {
-  vpc_id = aws_vpc.bs101-dev.id
+  vpc_id = aws_vpc.ssl-dev.id
 
   ingress {
     from_port   = 80
@@ -117,12 +117,12 @@ resource "aws_security_group" "vpc_app_sg" {
   }
 
   tags = {
-    Name = "bs101-dev-app-sg"
+    Name = "ssl-dev-app-sg"
   }
 }
 
 resource "aws_security_group" "lambda_sg" {
-  vpc_id = aws_vpc.bs101-dev.id
+  vpc_id = aws_vpc.ssl-dev.id
 
   ingress {
     from_port   = 443
@@ -139,6 +139,6 @@ resource "aws_security_group" "lambda_sg" {
   }
 
   tags = {
-    Name = "bs101-dev-lambda-sg"
+    Name = "ssl-dev-lambda-sg"
   }
 }
