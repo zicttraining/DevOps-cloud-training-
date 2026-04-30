@@ -1,18 +1,18 @@
 # SNS Topic for sending alarm notifications
-resource "aws_sns_topic" "bs101-prod_alarm_topic" {
-  name = "bs101-prod-app-cpu-usage-alarm-topic"
+resource "aws_sns_topic" "bme-prod_alarm_topic" {
+  name = "bme-prod-app-cpu-usage-alarm-topic"
 }
 
 # SNS Subscription to receive email notifications
-resource "aws_sns_topic_subscription" "bs101-prod_email_subscription" {
-  topic_arn = aws_sns_topic.bs101-prod_alarm_topic.arn
+resource "aws_sns_topic_subscription" "bme-prod_email_subscription" {
+  topic_arn = aws_sns_topic.bme-prod_alarm_topic.arn
   protocol  = "email"
   endpoint  = "samuel.ogah@zicloudtech.com" # Replace with the desired email address
 }
 
 # CloudWatch Log Group for application logs
-resource "aws_cloudwatch_log_group" "bs101-prod_logs" {
-  name              = "/aws/bs101-prod-app/logs"
+resource "aws_cloudwatch_log_group" "bme-prod_logs" {
+  name              = "/aws/bme-prod-app/logs"
   retention_in_days = 7 # Retain logs for 7 days
 }
 
@@ -22,18 +22,18 @@ resource "random_id" "bucket_suffix" {
 }
 
 # S3 Bucket for CloudTrail logs with unique name
-resource "aws_s3_bucket" "bs101-prod_monitoring_bucket" {
-  bucket = "bs101-prod-app-monitoring-${random_id.bucket_suffix.hex}"
+resource "aws_s3_bucket" "bme-prod_monitoring_bucket" {
+  bucket = "bme-prod-app-monitoring-${random_id.bucket_suffix.hex}"
 
   tags = {
-    Name        = "bs101-prod_monitoring_bucket"
+    Name        = "bme-prod_monitoring_bucket"
     Environment = "prod"
   }
 }
 
 # Policy for CloudTrail to write logs to the S3 bucket
-resource "aws_s3_bucket_policy" "bs101-prod_monitoring_bucket_policy" {
-  bucket = aws_s3_bucket.bs101-prod_monitoring_bucket.id
+resource "aws_s3_bucket_policy" "bme-prod_monitoring_bucket_policy" {
+  bucket = aws_s3_bucket.bme-prod_monitoring_bucket.id
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -45,7 +45,7 @@ resource "aws_s3_bucket_policy" "bs101-prod_monitoring_bucket_policy" {
           Service = "cloudtrail.amazonaws.com"
         },
         Action   = "s3:PutObject",
-        Resource = "${aws_s3_bucket.bs101-prod_monitoring_bucket.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+        Resource = "${aws_s3_bucket.bme-prod_monitoring_bucket.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
         Condition = {
           StringEquals = {
             "s3:x-amz-acl" = "bucket-owner-full-control"
@@ -59,27 +59,27 @@ resource "aws_s3_bucket_policy" "bs101-prod_monitoring_bucket_policy" {
           Service = "cloudtrail.amazonaws.com"
         },
         Action   = "s3:GetBucketAcl",
-        Resource = aws_s3_bucket.bs101-prod_monitoring_bucket.arn
+        Resource = aws_s3_bucket.bme-prod_monitoring_bucket.arn
       }
     ]
   })
 }
 
 # CloudTrail for tracking API calls and activity logs
-resource "aws_cloudtrail" "bs101-prod_trail" {
-  name                       = "bs101-prod-app-trail2"
-  s3_bucket_name             = aws_s3_bucket.bs101-prod_monitoring_bucket.bucket
+resource "aws_cloudtrail" "bme-prod_trail" {
+  name                       = "bme-prod-app-trail2"
+  s3_bucket_name             = aws_s3_bucket.bme-prod_monitoring_bucket.bucket
   is_multi_region_trail      = false
   enable_log_file_validation = true
 
   tags = {
-    Name = "bs101-prod-app-cloudtrail"
+    Name = "bme-prod-app-cloudtrail"
   }
 }
 
 # IAM Role for CloudWatch Alarms to send notifications to SNS
 resource "aws_iam_role" "cloudwatch_alarm_role" {
-  name = "bs101-prod-app-cloudwatch-alarm-role"
+  name = "bme-prod-app-cloudwatch-alarm-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -97,7 +97,7 @@ resource "aws_iam_role" "cloudwatch_alarm_role" {
 
 # IAM Policy for CloudWatch Alarms to publish to SNS topic
 resource "aws_iam_policy" "cloudwatch_alarm_policy" {
-  name        = "bs101-prod-app-cloudwatch-alarm-policy"
+  name        = "bme-prod-app-cloudwatch-alarm-policy"
   description = "Allows CloudWatch Alarms to publish to SNS"
   policy = jsonencode({
     Version = "2012-10-17",
@@ -107,7 +107,7 @@ resource "aws_iam_policy" "cloudwatch_alarm_policy" {
         Action = [
           "sns:Publish"
         ],
-        Resource = aws_sns_topic.bs101-prod_alarm_topic.arn
+        Resource = aws_sns_topic.bme-prod_alarm_topic.arn
       }
     ]
   })
@@ -120,8 +120,8 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_alarm_role_attachment" {
 }
 
 # CloudWatch Alarm for EC2 instance CPU usage exceeding 85%
-resource "aws_cloudwatch_metric_alarm" "bs101-prod_ec2_cpu_alarm" {
-  alarm_name          = "bs101-prod-app-ec2-cpu-usage-high"
+resource "aws_cloudwatch_metric_alarm" "bme-prod_ec2_cpu_alarm" {
+  alarm_name          = "bme-prod-app-ec2-cpu-usage-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
@@ -130,15 +130,15 @@ resource "aws_cloudwatch_metric_alarm" "bs101-prod_ec2_cpu_alarm" {
   statistic           = "Average"
   threshold           = 85
   dimensions = {
-    InstanceId = aws_instance.bs101_prod_web_1.id # Make sure this EC2 instance is defined in the configuration
+    InstanceId = aws_instance.bme_prod_web_1.id # Make sure this EC2 instance is defined in the configuration
   }
 
-  alarm_actions = [aws_sns_topic.bs101-prod_alarm_topic.arn]
+  alarm_actions = [aws_sns_topic.bme-prod_alarm_topic.arn]
 }
 
 # CloudWatch Alarm for RDS instance CPU usage exceeding 85%
-resource "aws_cloudwatch_metric_alarm" "bs101-prod_rds_cpu_alarm" {
-  alarm_name          = "bs101-prod-app-rds-cpu-usage-high"
+resource "aws_cloudwatch_metric_alarm" "bme-prod_rds_cpu_alarm" {
+  alarm_name          = "bme-prod-app-rds-cpu-usage-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
@@ -147,10 +147,10 @@ resource "aws_cloudwatch_metric_alarm" "bs101-prod_rds_cpu_alarm" {
   statistic           = "Average"
   threshold           = 85
   dimensions = {
-    DBInstanceIdentifier = aws_db_instance.bs101-prod_db.id # Ensure this RDS instance is defined in the configuration
+    DBInstanceIdentifier = aws_db_instance.bme-prod_db.id # Ensure this RDS instance is defined in the configuration
   }
 
-  alarm_actions = [aws_sns_topic.bs101-prod_alarm_topic.arn]
+  alarm_actions = [aws_sns_topic.bme-prod_alarm_topic.arn]
 }
 
 # Caller identity to get the current AWS account ID for IAM role references

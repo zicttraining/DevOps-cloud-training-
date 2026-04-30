@@ -40,7 +40,7 @@ resource "aws_instance" "bme_uat_web_2" {
 }
 
 # Private EC2 Instances (App Tier)
-resource "aws_instance" "bs101-uat_1" {
+resource "aws_instance" "bme-uat_1" {
   ami                    = "ami-066a7fbea5161f451"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_subnet_1.id
@@ -60,7 +60,7 @@ resource "aws_instance" "bs101-uat_1" {
   EOF
 }
 
-resource "aws_instance" "bs101-uat_2" {
+resource "aws_instance" "bme-uat_2" {
   ami                    = "ami-066a7fbea5161f451"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_subnet_2.id
@@ -81,7 +81,7 @@ resource "aws_instance" "bs101-uat_2" {
 }
 
 # Lambda Function as Application Server
-# resource "aws_lambda_function" "bs101-uat_lambda" {
+# resource "aws_lambda_function" "bme-uat_lambda" {
 #   function_name = "bme-uat-app-lambda"
 #   runtime       = "nodejs18.x"         # Ensure the runtime is supported
 #   handler       = "index.handler"      # Make sure this matches your code’s entry point

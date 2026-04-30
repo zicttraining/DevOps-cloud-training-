@@ -1,5 +1,5 @@
 # AWS Budget to monitor monthly spending for EC2
-resource "aws_budgets_budget" "bs101-uat_budget" {
+resource "aws_budgets_budget" "bme-uat_budget" {
   name         = "AppBudget"
   budget_type  = "COST"
   limit_amount = "500"
@@ -16,7 +16,7 @@ resource "aws_budgets_budget" "bs101-uat_budget" {
   }
 
   tags = {
-    Name = "bs101-uat_budget"
+    Name = "bme-uat_budget"
   }
 }
 

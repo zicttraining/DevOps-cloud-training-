@@ -1,67 +1,67 @@
 # ---------- VPCs ----------
 
 # Web Tier VPC (public resources)
-resource "aws_vpc" "bs101_prod_app" {
+resource "aws_vpc" "bme_prod_app" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "bs101-prod-app-vpc"
+    Name = "bme-prod-app-vpc"
   }
 }
 
 # App Tier VPC (private resources)
-resource "aws_vpc" "bs101-prod" {
+resource "aws_vpc" "bme-prod" {
   cidr_block = "10.1.0.0/16"
 
   tags = {
-    Name = "bs101-prod-vpc"
+    Name = "bme-prod-vpc"
   }
 }
 
 # ---------- Internet Gateway & Route Table (Public) ----------
 
-resource "aws_internet_gateway" "bs101_prod_app_igw" {
-  vpc_id = aws_vpc.bs101_prod_app.id
+resource "aws_internet_gateway" "bme_prod_app_igw" {
+  vpc_id = aws_vpc.bme_prod_app.id
 
   tags = {
-    Name = "bs101-prod-app-igw"
+    Name = "bme-prod-app-igw"
   }
 }
 
 resource "aws_route_table" "public_rt" {
-  vpc_id = aws_vpc.bs101_prod_app.id
+  vpc_id = aws_vpc.bme_prod_app.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.bs101_prod_app_igw.id
+    gateway_id = aws_internet_gateway.bme_prod_app_igw.id
   }
 
   tags = {
-    Name = "bs101-prod-app-public-rt"
+    Name = "bme-prod-app-public-rt"
   }
 }
 
 # ---------- Public Subnets ----------
 
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id                  = aws_vpc.bs101_prod_app.id
+  vpc_id                  = aws_vpc.bme_prod_app.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-west-2a"
+  availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "bs101-prod-app-public-subnet-1"
+    Name = "bme-prod-app-public-subnet-1"
   }
 }
 
 resource "aws_subnet" "public_subnet_2" {
-  vpc_id                  = aws_vpc.bs101_prod_app.id
+  vpc_id                  = aws_vpc.bme_prod_app.id
   cidr_block              = "10.0.2.0/24"
-  availability_zone       = "us-west-2b"
+  availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "bs101-prod-app-public-subnet-2"
+    Name = "bme-prod-app-public-subnet-2"
   }
 }
 
@@ -80,24 +80,24 @@ resource "aws_route_table_association" "public_subnet_assoc_2" {
 # ---------- Private Subnets (App/DB Tier) ----------
 
 resource "aws_subnet" "private_subnet_1" {
-  vpc_id                  = aws_vpc.bs101-prod.id
+  vpc_id                  = aws_vpc.bme-prod.id
   cidr_block              = "10.1.1.0/24"
-  availability_zone       = "us-west-2a"
+  availability_zone       = "us-east-1a"
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "bs101-prod-private-subnet-1"
+    Name = "bme-prod-private-subnet-1"
   }
 }
 
 resource "aws_subnet" "private_subnet_2" {
-  vpc_id                  = aws_vpc.bs101-prod.id
+  vpc_id                  = aws_vpc.bme-prod.id
   cidr_block              = "10.1.2.0/24"
-  availability_zone       = "us-west-2b"
+  availability_zone       = "us-east-1b"
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "bs101-prod-private-subnet-2"
+    Name = "bme-prod-private-subnet-2"
   }
 }
 
@@ -105,9 +105,9 @@ resource "aws_subnet" "private_subnet_2" {
 
 # Web Tier Security Group
 resource "aws_security_group" "vpc_web_sg" {
-  name        = "bs101-prod-web-sg"
+  name        = "bme-prod-web-sg"
   description = "Allow HTTP, HTTPS, and SSH"
-  vpc_id      = aws_vpc.bs101_prod_app.id
+  vpc_id      = aws_vpc.bme_prod_app.id
 
   ingress {
     from_port   = 80
@@ -138,15 +138,15 @@ resource "aws_security_group" "vpc_web_sg" {
   }
 
   tags = {
-    Name = "bs101-prod-web-sg"
+    Name = "bme-prod-web-sg"
   }
 }
 
 # App Tier Security Group
 resource "aws_security_group" "vpc_app_sg" {
-  name        = "bs101-prod-app-sg"
+  name        = "bme-prod-app-sg"
   description = "Allow HTTP from Web SG"
-  vpc_id      = aws_vpc.bs101-prod.id
+  vpc_id      = aws_vpc.bme-prod.id
 
   ingress {
     description     = "Allow HTTP from Web Tier"
@@ -164,6 +164,6 @@ resource "aws_security_group" "vpc_app_sg" {
   }
 
   tags = {
-    Name = "bs101-prod-app-sg"
+    Name = "bme-prod-app-sg"
   }
 }
