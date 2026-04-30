@@ -1,16 +1,16 @@
 # Database Subnet Group with two private subnets for high availability# DB Subnet Group (only one instance of this resource)
 resource "aws_db_subnet_group" "bs101-uat_subnet_group" {
-  name       = "bme-uat-app-db-subnet-group"
+  name       = "mc-uat-app-db-subnet-group"
   subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id] # Use private subnets
 
   tags = {
-    Name = "bme-uat-app-db-subnet-group"
+    Name = "mc-uat-app-db-subnet-group"
   }
 }
 
 # Security Group for the Database to control access
 resource "aws_security_group" "bs101-uat_db_sg" {
-  name   = "bme-uat-app-db-sg"
+  name   = "mc-uat-app-db-sg"
   vpc_id = aws_vpc.bs101-uat.id # Corrected VPC reference
 
   # Allow MySQL access (port 3306) from the web server's security group
@@ -37,7 +37,7 @@ resource "aws_db_instance" "bs101-uat_db" {
   engine                 = "mysql" # Change to your desired database engine
   engine_version         = "8.0"   # Specify the desired version
   instance_class         = "db.t3.micro"
-  db_name                = "bmeuatdb"    # Corrected to use db_name
+  db_name                = "mcuatdb"    # Corrected to use db_name
   username               = "admin"       # Username for the database
   password               = "password123" # Replace with a secure password
   db_subnet_group_name   = aws_db_subnet_group.bs101-uat_subnet_group.name

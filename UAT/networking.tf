@@ -4,7 +4,7 @@
 # resource "aws_acm_certificate" "bs101-uat_cert" {
 #   domain_name       = "bs101.com"
 #   validation_method = "DNS"
-#   tags = { Name = "bme-uat-app-cert" }
+#   tags = { Name = "mc-uat-app-cert" }
 # }
 
 # Route 53 Record for DNS-based certificate validation
@@ -38,29 +38,29 @@ resource "aws_route53_zone" "bs101_zone" {
 
 # Public EC2 Instance in a Public Subnet
 resource "aws_instance" "bs101-uat" {
-  ami                         = "ami-066a7fbea5161f451" # Replace with a valid AMI ID
+  ami                         = "ami-0c1e21d82fe9c9336" # Replace with a valid AMI ID
   instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.public_subnet_1.id
   security_groups             = [aws_security_group.vpc_web_sg.id] # Ensure this security group is declared
   associate_public_ip_address = true
 
-  tags = { Name = "bme-uat-app-server" }
+  tags = { Name = "mc-uat-app-server" }
 }
 
 # Load Balancer for HTTP and HTTPS traffic
 resource "aws_lb" "bs101-uat_lb" {
-  name               = "bme-uat-app-lb"
+  name               = "mc-uat-app-lb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.vpc_web_sg.id]
   subnets            = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
 
-  tags = { Name = "bme-uat-app-lb" }
+  tags = { Name = "mc-uat-app-lb" }
 }
 
 # Target Group pointing to the EC2 instance
 resource "aws_lb_target_group" "bs101-uat_tg" {
-  name        = "bme-uat-app-tg"
+  name        = "mc-uat-app-tg"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.bs101-uat.id
@@ -75,7 +75,7 @@ resource "aws_lb_target_group" "bs101-uat_tg" {
     matcher             = "200-299"
   }
 
-  tags = { Name = "bme-uat-app-tg" }
+  tags = { Name = "mc-uat-app-tg" }
 }
 
 # Register the EC2 instance with the Target Group

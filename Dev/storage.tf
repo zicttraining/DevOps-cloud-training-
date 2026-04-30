@@ -111,7 +111,7 @@ resource "aws_s3_bucket_policy" "bs101-dev_bucket_policy" {
 
 # EBS Volume for additional storage attached to the web server
 resource "aws_ebs_volume" "bs101-dev-app_web_ebs" {
-  availability_zone = "us-west-2a" # Corrected spelling
+  availability_zone = "us-east-1a" # Corrected spelling
   size              = 10           # Size in GB
   tags = {
     Name = "bs101-dev-app-web-ebs"

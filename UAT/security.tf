@@ -20,7 +20,7 @@ resource "aws_iam_role" "bs101-uat_ec2_role" {
 
 # IAM Policy to allow access to Secrets Manager
 resource "aws_iam_policy" "bs101-uat_secrets_manager_policy" {
-  name        = "bme-uat-app-secrets-manager-policy"
+  name        = "mc-uat-app-secrets-manager-policy"
   description = "Allow EC2 to access Secrets Manager"
 
   policy = jsonencode({
@@ -45,7 +45,7 @@ resource "aws_iam_role_policy_attachment" "bs101-uat_attach_secrets_policy" {
 }
 
 #resource "aws_secretsmanager_secret" "bs101-uat_db_credentials" {
-#  name        = "bme-uat-app-db-credentials"
+#  name        = "mc-uat-app-db-credentials"
 #  description = "Database credentials for the application"
 #}
 
@@ -60,7 +60,7 @@ resource "aws_iam_role_policy_attachment" "bs101-uat_attach_secrets_policy" {
 
 # Security Group for the Web Server
 resource "aws_security_group" "bs101-uat_web_sg" {
-  name   = "bme-uat-app-web-sg"
+  name   = "mc-uat-app-web-sg"
   vpc_id = aws_vpc.bs101-uat.id # Ensure this VPC is declared
 
   # Allow HTTP traffic on port 80 from any IP

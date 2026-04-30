@@ -1,5 +1,5 @@
 resource "aws_instance" "bs101_prod" {
-  ami                         = "ami-066a7fbea5161f451"
+  ami                         = "ami-0c1e21d82fe9c9336"
   instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.public_subnet_1.id
   vpc_security_group_ids      = [aws_security_group.vpc_web_sg.id]

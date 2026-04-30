@@ -1,6 +1,6 @@
 # Public EC2 Instances (Web Tier)
 resource "aws_instance" "bs101_dev_web_1" {
-  ami                    = "ami-066a7fbea5161f451"
+  ami                    = "ami-0c1e21d82fe9c9336"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_subnet_1.id
   vpc_security_group_ids = [aws_security_group.vpc_web_sg.id]
@@ -20,7 +20,7 @@ resource "aws_instance" "bs101_dev_web_1" {
 }
 
 resource "aws_instance" "bs101_dev_web_2" {
-  ami                    = "ami-066a7fbea5161f451"
+  ami                    = "ami-0c1e21d82fe9c9336"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_subnet_2.id
   vpc_security_group_ids = [aws_security_group.vpc_web_sg.id]
@@ -41,7 +41,7 @@ resource "aws_instance" "bs101_dev_web_2" {
 
 # Private EC2 Instances (App Tier)
 resource "aws_instance" "bs101-dev_1" {
-  ami                    = "ami-066a7fbea5161f451"
+  ami                    = "ami-0c1e21d82fe9c9336"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_subnet_1.id
   vpc_security_group_ids = [aws_security_group.vpc_app_sg.id]
@@ -61,7 +61,7 @@ resource "aws_instance" "bs101-dev_1" {
 }
 
 resource "aws_instance" "bs101-dev_2" {
-  ami                    = "ami-066a7fbea5161f451"
+  ami                    = "ami-0c1e21d82fe9c9336"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_subnet_2.id
   vpc_security_group_ids = [aws_security_group.vpc_app_sg.id]
