@@ -25,6 +25,10 @@ on:
         type: choice
         options: [dev, uat, prod]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy-dev:
     name: Deploy to Dev
@@ -35,23 +39,17 @@ jobs:
         working-directory: Dev
     steps:
       - uses: actions/checkout@v4
-
       - name: Configure AWS Credentials (Dev)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          aws-region: us-west-2
-
+          role-to-assume: arn:aws:iam::817715291662:role/GitHubActionsRole
+          aws-region: us-east-1
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-
       - name: Terraform Init
-        run: terraform init
-
+        run: terraform init -reconfigure
       - name: Terraform Plan
         run: terraform plan
-
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
@@ -65,23 +63,17 @@ jobs:
         working-directory: UAT
     steps:
       - uses: actions/checkout@v4
-
       - name: Configure AWS Credentials (UAT)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_UAT }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_UAT }}
-          aws-region: us-west-2
-
+          role-to-assume: arn:aws:iam::887942575674:role/GitHubActionsRole
+          aws-region: us-east-1
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-
       - name: Terraform Init
-        run: terraform init
-
+        run: terraform init -reconfigure
       - name: Terraform Plan
         run: terraform plan
-
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
@@ -94,23 +86,17 @@ jobs:
         working-directory: Prod
     steps:
       - uses: actions/checkout@v4
-
       - name: Configure AWS Credentials (Prod)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: us-west-2
-
+          role-to-assume: arn:aws:iam::403884279428:role/GitHubActionsRole
+          aws-region: us-east-1
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-
       - name: Terraform Init
-        run: terraform init
-
+        run: terraform init -reconfigure
       - name: Terraform Plan
         run: terraform plan
-
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
@@ -123,19 +109,17 @@ jobs:
         working-directory: ${{ github.event.inputs.environment == 'dev' && 'Dev' || github.event.inputs.environment == 'uat' && 'UAT' || 'Prod' }}
     steps:
       - uses: actions/checkout@v4
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ github.event.inputs.environment == 'dev' && secrets.AWS_ACCESS_KEY_ID_DEV || github.event.inputs.environment == 'uat' && secrets.AWS_ACCESS_KEY_ID_UAT || secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ github.event.inputs.environment == 'dev' && secrets.AWS_SECRET_ACCESS_KEY_DEV || github.event.inputs.environment == 'uat' && secrets.AWS_SECRET_ACCESS_KEY_UAT || secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: us-west-2
-
+          role-to-assume: >-
+            ${{ github.event.inputs.environment == 'dev' && 'arn:aws:iam::817715291662:role/GitHubActionsRole' || 
+                github.event.inputs.environment == 'uat' && 'arn:aws:iam::887942575674:role/GitHubActionsRole' || 
+                'arn:aws:iam::403884279428:role/GitHubActionsRole' }}
+          aws-region: us-east-1
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-
       - name: Terraform Init
-        run: terraform init
-
+        run: terraform init -reconfigure
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
