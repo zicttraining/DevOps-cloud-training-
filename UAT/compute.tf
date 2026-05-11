@@ -40,7 +40,7 @@ resource "aws_instance" "mc_uat_web_2" {
 }
 
 # Private EC2 Instances (App Tier)
-resource "aws_instance" "MC-uat_1" {
+resource "aws_instance" "mc-uat_1" {
   ami                    = "ami-0c1e21d82fe9c9336"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_subnet_1.id
@@ -60,7 +60,7 @@ resource "aws_instance" "MC-uat_1" {
   EOF
 }
 
-resource "aws_instance" "MC-uat_2" {
+resource "aws_instance" "mc-uat_2" {
   ami                    = "ami-0c1e21d82fe9c9336"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_subnet_2.id
@@ -81,7 +81,7 @@ resource "aws_instance" "MC-uat_2" {
 }
 
 # Lambda Function as Application Server
-# resource "aws_lambda_function" "MC-uat_lambda" {
+# resource "aws_lambda_function" "mc-uat_lambda" {
 #   function_name = "mc-uat-app-lambda"
 #   runtime       = "nodejs18.x"         # Ensure the runtime is supported
 #   handler       = "index.handler"      # Make sure this matches your code’s entry point

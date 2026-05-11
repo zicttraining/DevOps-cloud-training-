@@ -1,5 +1,5 @@
 # Database Subnet Group with two private subnets for high availability# DB Subnet Group (only one instance of this resource)
-resource "aws_db_subnet_group" "MC-uat_subnet_group" {
+resource "aws_db_subnet_group" "mc-uat_subnet_group" {
   name       = "mc-uat-app-db-subnet-group"
   subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id] # Use private subnets
 
@@ -9,9 +9,9 @@ resource "aws_db_subnet_group" "MC-uat_subnet_group" {
 }
 
 # Security Group for the Database to control access
-resource "aws_security_group" "MC-uat_db_sg" {
+resource "aws_security_group" "mc-uat_db_sg" {
   name   = "mc-uat-app-db-sg"
-  vpc_id = aws_vpc.MC-uat.id # Corrected VPC reference
+  vpc_id = aws_vpc.mc-uat.id # Corrected VPC reference
 
   # Allow MySQL access (port 3306) from the web server's security group
   ingress {
@@ -31,7 +31,7 @@ resource "aws_security_group" "MC-uat_db_sg" {
 }
 
 # RDS Instance for the application database
-resource "aws_db_instance" "MC-uat_db" {
+resource "aws_db_instance" "mc-uat_db" {
   allocated_storage      = 20
   storage_type           = "gp2"
   engine                 = "mysql" # Change to your desired database engine
@@ -40,12 +40,12 @@ resource "aws_db_instance" "MC-uat_db" {
   db_name                = "mcuatdb"    # Corrected to use db_name
   username               = "admin"       # Username for the database
   password               = "password123" # Replace with a secure password
-  db_subnet_group_name   = aws_db_subnet_group.MC-uat_subnet_group.name
-  vpc_security_group_ids = [aws_security_group.MC-uat_db_sg.id] # Reference to the security group for RDS
+  db_subnet_group_name   = aws_db_subnet_group.mc-uat_subnet_group.name
+  vpc_security_group_ids = [aws_security_group.mc-uat_db_sg.id] # Reference to the security group for RDS
 
   skip_final_snapshot = true
 
   tags = {
-    Name = "MC-uat_db"
+    Name = "mc-uat_db"
   }
 }

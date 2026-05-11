@@ -1,6 +1,6 @@
 # IAM Role for EC2 to allow access to AWS services
-resource "aws_iam_role" "MC-dev_ec2_role" {
-  name = "MC-dev_ec2_role"
+resource "aws_iam_role" "mc-dev_ec2_role" {
+  name = "mc-dev_ec2_role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -14,13 +14,13 @@ resource "aws_iam_role" "MC-dev_ec2_role" {
   })
 
   tags = {
-    Name = "MC-dev_ec2_role"
+    Name = "mc-dev_ec2_role"
   }
 }
 
 # IAM Policy to allow access to Secrets Manager
-resource "aws_iam_policy" "MC-dev_secrets_manager_policy" {
-  name        = "MC-dev-app-secrets-manager-policy"
+resource "aws_iam_policy" "mc-dev_secrets_manager_policy" {
+  name        = "mc-dev-app-secrets-manager-policy"
   description = "Allow EC2 to access Secrets Manager"
 
   policy = jsonencode({
@@ -39,19 +39,19 @@ resource "aws_iam_policy" "MC-dev_secrets_manager_policy" {
 }
 
 # Attach Secrets Manager Policy to the EC2 Role
-resource "aws_iam_role_policy_attachment" "MC-dev_attach_secrets_policy" {
-  role       = aws_iam_role.MC-dev_ec2_role.name
-  policy_arn = aws_iam_policy.MC-dev_secrets_manager_policy.arn
+resource "aws_iam_role_policy_attachment" "mc-dev_attach_secrets_policy" {
+  role       = aws_iam_role.mc-dev_ec2_role.name
+  policy_arn = aws_iam_policy.mc-dev_secrets_manager_policy.arn
 }
 
-#resource "aws_secretsmanager_secret" "MC-dev_db_credentials" {
-#  name        = "MC-dev-app-db-credentials"
+#resource "aws_secretsmanager_secret" "mc-dev_db_credentials" {
+#  name        = "mc-dev-app-db-credentials"
 #  description = "Database credentials for the application"
 #}
 
 # Store secret values (username/password) in Secrets Manager
-#resource "aws_secretsmanager_secret_version" "MC-dev_db_credentials_version" {
-#  secret_id     = aws_secretsmanager_secret.MC-dev_db_credentials.id
+#resource "aws_secretsmanager_secret_version" "mc-dev_db_credentials_version" {
+#  secret_id     = aws_secretsmanager_secret.mc-dev_db_credentials.id
 #  secret_string = jsonencode({
 #    username = "admin",
 #    password = "password123" # Replace with a secure password
@@ -59,9 +59,9 @@ resource "aws_iam_role_policy_attachment" "MC-dev_attach_secrets_policy" {
 #}
 
 # Security Group for the Web Server
-resource "aws_security_group" "MC-dev_web_sg" {
-  name   = "MC-dev-app-web-sg"
-  vpc_id = aws_vpc.MC-dev.id # Ensure this VPC is declared
+resource "aws_security_group" "mc-dev_web_sg" {
+  name   = "mc-dev-app-web-sg"
+  vpc_id = aws_vpc.mc-dev.id # Ensure this VPC is declared
 
   # Allow HTTP traffic on port 80 from any IP
   ingress {

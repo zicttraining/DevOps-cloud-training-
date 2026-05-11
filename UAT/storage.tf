@@ -1,6 +1,6 @@
 
 # S3 Bucket for application storage with private access
-resource "aws_s3_bucket" "MC-uat_bucket" {
+resource "aws_s3_bucket" "mc-uat_bucket" {
   bucket = "mc-uat-app-logs-${random_id.bucket_suffix.hex}"
 
   tags = {
@@ -9,8 +9,8 @@ resource "aws_s3_bucket" "MC-uat_bucket" {
 }
 
 # Enforce ownership controls on the bucket
-resource "aws_s3_bucket_ownership_controls" "MC-uat_bucket_ownership_controls" {
-  bucket = aws_s3_bucket.MC-uat_bucket.id
+resource "aws_s3_bucket_ownership_controls" "mc-uat_bucket_ownership_controls" {
+  bucket = aws_s3_bucket.mc-uat_bucket.id
 
   rule {
     object_ownership = "BucketOwnerEnforced"
@@ -52,8 +52,8 @@ resource "aws_iam_policy" "s3_management_policy" {
           "s3:DeleteObject"
         ],
         Resource = [
-          "${aws_s3_bucket.MC-uat_bucket.arn}",
-          "${aws_s3_bucket.MC-uat_bucket.arn}/*"
+          "${aws_s3_bucket.mc-uat_bucket.arn}",
+          "${aws_s3_bucket.mc-uat_bucket.arn}/*"
         ]
       }
     ]
@@ -67,8 +67,8 @@ resource "aws_iam_role_policy_attachment" "s3_management_role_attachment" {
 }
 
 # Define a bucket policy to enforce ownership and access permissions
-resource "aws_s3_bucket_policy" "MC-uat_bucket_policy" {
-  bucket = aws_s3_bucket.MC-uat_bucket.id
+resource "aws_s3_bucket_policy" "mc-uat_bucket_policy" {
+  bucket = aws_s3_bucket.mc-uat_bucket.id
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -85,8 +85,8 @@ resource "aws_s3_bucket_policy" "MC-uat_bucket_policy" {
           "s3:DeleteObject"
         ],
         Resource = [
-          "${aws_s3_bucket.MC-uat_bucket.arn}",
-          "${aws_s3_bucket.MC-uat_bucket.arn}/*"
+          "${aws_s3_bucket.mc-uat_bucket.arn}",
+          "${aws_s3_bucket.mc-uat_bucket.arn}/*"
         ]
       },
       # Allow CloudTrail to write logs to this bucket
@@ -97,7 +97,7 @@ resource "aws_s3_bucket_policy" "MC-uat_bucket_policy" {
           Service = "cloudtrail.amazonaws.com"
         },
         Action   = "s3:PutObject",
-        Resource = "${aws_s3_bucket.MC-uat_bucket.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+        Resource = "${aws_s3_bucket.mc-uat_bucket.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
         Condition = {
           StringEquals = {
             "s3:x-amz-acl" = "bucket-owner-full-control"
