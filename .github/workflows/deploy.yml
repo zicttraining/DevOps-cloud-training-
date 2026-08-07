@@ -114,8 +114,8 @@ jobs:
         with:
           role-to-assume: >-
             ${{ github.event.inputs.environment == 'dev' && 'arn:aws:iam::418059030794:role/GitHubActionsRole' || 
-                github.event.inputs.environment == 'uat' && 'arn:aws:iam::283146810553:role/GitHubActionsRole' || 
-                'arn:aws:iam::403884279428:role/GitHubActionsRole' }}
+                github.event.inputs.environment == 'uat' && 'arn:aws:iam::283146810553:role/GithubActionRole-UAT' || 
+                'arn:aws:iam::233291747054:role/GitHubActionsRole-Prod' }}
           aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
