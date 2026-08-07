@@ -39,6 +39,7 @@ resource "aws_instance" "bs101_dev_web_2" {
   EOF
 }
 
+
 # Private EC2 Instances (App Tier)
 resource "aws_instance" "bme-dev_1" {
   ami                    = "ami-066a7fbea5161f451"
