@@ -113,8 +113,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: >-
-            ${{ github.event.inputs.environment == 'dev' && 'arn:aws:iam::817715291662:role/GitHubActionsRole' || 
-                github.event.inputs.environment == 'uat' && 'arn:aws:iam::887942575674:role/GitHubActionsRole' || 
+            ${{ github.event.inputs.environment == 'dev' && 'arn:aws:iam::418059030794:role/GitHubActionsRole' || 
+                github.event.inputs.environment == 'uat' && 'arn:aws:iam::283146810553:role/GitHubActionsRole' || 
                 'arn:aws:iam::403884279428:role/GitHubActionsRole' }}
           aws-region: us-west-2
       - name: Setup Terraform
