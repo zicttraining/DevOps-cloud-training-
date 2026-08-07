@@ -1,17 +1,17 @@
 # DB Subnet Group (for high availability)
-resource "aws_db_subnet_group" "bs101-prod_subnet_group" {
-  name       = "bs101-prod-app-db-subnet-group"
+resource "aws_db_subnet_group" "bme-prod_subnet_group" {
+  name       = "bme-prod-app-db-subnet-group"
   subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
 
   tags = {
-    Name = "bs101-prod-app-db-subnet-group"
+    Name = "bme-prod-app-db-subnet-group"
   }
 }
 
 # DB Security Group
-resource "aws_security_group" "bs101-prod_db_sg" {
-  name   = "bs101-prod-app-db-sg"
-  vpc_id = aws_vpc.bs101-prod.id
+resource "aws_security_group" "bme-prod_db_sg" {
+  name   = "bme-prod-app-db-sg"
+  vpc_id = aws_vpc.bme-prod.id
 
   ingress {
     from_port       = 3306
@@ -33,7 +33,7 @@ resource "aws_security_group" "bs101-prod_db_sg" {
 }
 
 # RDS Instance
-resource "aws_db_instance" "bs101-prod_db" {
+resource "aws_db_instance" "bme-prod_db" {
   allocated_storage      = 20
   storage_type           = "gp2"
   engine                 = "mysql"
@@ -42,12 +42,12 @@ resource "aws_db_instance" "bs101-prod_db" {
   db_name                = "bs101proddb"
   username               = "admin"
   password               = "password123"
-  db_subnet_group_name   = aws_db_subnet_group.bs101-prod_subnet_group.name
-  vpc_security_group_ids = [aws_security_group.bs101-prod_db_sg.id]
+  db_subnet_group_name   = aws_db_subnet_group.bme-prod_subnet_group.name
+  vpc_security_group_ids = [aws_security_group.bme-prod_db_sg.id]
 
   skip_final_snapshot = true
 
   tags = {
-    Name = "bs101-prod-db"
+    Name = "bme-prod-db"
   }
 }

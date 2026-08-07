@@ -42,8 +42,8 @@ jobs:
       - name: Configure AWS Credentials (Dev)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::817715291662:role/GitHubActionsRole
-          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::418059030794:role/GitHubActionsRole
+          aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
@@ -66,8 +66,8 @@ jobs:
       - name: Configure AWS Credentials (UAT)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::887942575674:role/GitHubActionsRole
-          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::283146810553:role/GithubActionRole-UAT
+          aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
@@ -89,8 +89,8 @@ jobs:
       - name: Configure AWS Credentials (Prod)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::403884279428:role/GitHubActionsRole
-          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::233291747054:role/GitHubActionsRole-Prod
+          aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
@@ -116,7 +116,7 @@ jobs:
             ${{ github.event.inputs.environment == 'dev' && 'arn:aws:iam::817715291662:role/GitHubActionsRole' || 
                 github.event.inputs.environment == 'uat' && 'arn:aws:iam::887942575674:role/GitHubActionsRole' || 
                 'arn:aws:iam::403884279428:role/GitHubActionsRole' }}
-          aws-region: us-east-1
+          aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init

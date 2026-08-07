@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "bs101-prod-app-buckettt"
+    bucket         = "bme-prod-app-bucket4"
     key            = "prod/terraform.tfstate"         # Use a unique path per environment
-    region         = "us-east-2"
-    #dynamodb_table = "bs101-prod-app-dbb"
+    region         = "us-west-2"
+    dynamodb_table = "bme-prod-app-dbb"
     encrypt        = true
   }
 }

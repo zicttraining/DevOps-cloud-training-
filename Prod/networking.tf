@@ -6,12 +6,12 @@ resource "aws_instance" "bs101_prod" {
   associate_public_ip_address = true
 
   tags = {
-    Name = "bs101-prod-app-server"
+    Name = "bme-prod-app-server"
   }
 }
 
 resource "aws_lb" "bs101_prod_lb" {
-  name               = "bs101-prod-app-lb"
+  name               = "bme-prod-app-lb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.vpc_web_sg.id]
@@ -21,15 +21,15 @@ resource "aws_lb" "bs101_prod_lb" {
   ]
 
   tags = {
-    Name = "bs101-prod-app-lb"
+    Name = "bme-prod-app-lb"
   }
 }
 
 resource "aws_lb_target_group" "bs101_prod_tg" {
-  name        = "bs101-prod-app-tg"
+  name        = "bme-prod-app-tg"
   port        = 80
   protocol    = "HTTP"
-  vpc_id      = aws_vpc.bs101-prod.id
+  vpc_id      = aws_vpc.bme-prod.id
   target_type = "instance"
 
   health_check {
@@ -42,7 +42,7 @@ resource "aws_lb_target_group" "bs101_prod_tg" {
   }
 
   tags = {
-    Name = "bs101-prod-app-tg"
+    Name = "bme-prod-app-tg"
   }
 }
 

@@ -1,7 +1,7 @@
 # ACM Certificate for HTTPS with domain bs101.com
 # Uncomment the following block and ensure ACM certificate validation is set up correctly if you want to use HTTPS.
 
-# resource "aws_acm_certificate" "bs101-uat_cert" {
+# resource "aws_acm_certificate" "bme-uat_cert" {
 #   domain_name       = "bs101.com"
 #   validation_method = "DNS"
 #   tags = { Name = "bme-uat-app-cert" }
@@ -11,7 +11,7 @@
 # Uncomment if you need certificate validation.
 # resource "aws_route53_record" "cert_validation" {
 #   for_each = {
-#     for dvo in aws_acm_certificate.bs101-uat_cert.domain_validation_options : dvo.domain_name => {
+#     for dvo in aws_acm_certificate.bme-uat_cert.domain_validation_options : dvo.domain_name => {
 #       name   = dvo.resource_record_name
 #       type   = dvo.resource_record_type
 #       record = dvo.resource_record_value
@@ -26,8 +26,8 @@
 
 # Validate ACM Certificate using DNS
 # Uncomment if using HTTPS with DNS validation for ACM.
-# resource "aws_acm_certificate_validation" "bs101-uat_cert_validation" {
-#   certificate_arn         = aws_acm_certificate.bs101-uat_cert.arn
+# resource "aws_acm_certificate_validation" "bme-uat_cert_validation" {
+#   certificate_arn         = aws_acm_certificate.bme-uat_cert.arn
 #   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 # }
 
@@ -37,7 +37,7 @@ resource "aws_route53_zone" "bs101_zone" {
 }
 
 # Public EC2 Instance in a Public Subnet
-resource "aws_instance" "bs101-uat" {
+resource "aws_instance" "bme-uat" {
   ami                         = "ami-066a7fbea5161f451" # Replace with a valid AMI ID
   instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.public_subnet_1.id
@@ -48,7 +48,7 @@ resource "aws_instance" "bs101-uat" {
 }
 
 # Load Balancer for HTTP and HTTPS traffic
-resource "aws_lb" "bs101-uat_lb" {
+resource "aws_lb" "bme-uat_lb" {
   name               = "bme-uat-app-lb"
   internal           = false
   load_balancer_type = "application"
@@ -59,11 +59,11 @@ resource "aws_lb" "bs101-uat_lb" {
 }
 
 # Target Group pointing to the EC2 instance
-resource "aws_lb_target_group" "bs101-uat_tg" {
+resource "aws_lb_target_group" "bme-uat_tg" {
   name        = "bme-uat-app-tg"
   port        = 80
   protocol    = "HTTP"
-  vpc_id      = aws_vpc.bs101-uat.id
+  vpc_id      = aws_vpc.bme-uat.id
   target_type = "instance"
 
   health_check {
@@ -79,15 +79,15 @@ resource "aws_lb_target_group" "bs101-uat_tg" {
 }
 
 # Register the EC2 instance with the Target Group
-resource "aws_lb_target_group_attachment" "bs101-uat_tg_attachment" {
-  target_group_arn = aws_lb_target_group.bs101-uat_tg.arn
-  target_id        = aws_instance.bs101-uat.id
+resource "aws_lb_target_group_attachment" "bme-uat_tg_attachment" {
+  target_group_arn = aws_lb_target_group.bme-uat_tg.arn
+  target_id        = aws_instance.bme-uat.id
   port             = 80
 }
 
 # HTTP Listener to redirect traffic to HTTPS
-resource "aws_lb_listener" "bs101-uat_http_listener" {
-  load_balancer_arn = aws_lb.bs101-uat_lb.arn
+resource "aws_lb_listener" "bme-uat_http_listener" {
+  load_balancer_arn = aws_lb.bme-uat_lb.arn
   port              = 80
   protocol          = "HTTP"
 
@@ -103,39 +103,39 @@ resource "aws_lb_listener" "bs101-uat_http_listener" {
 
 # HTTPS Listener for secure traffic with ACM certificate
 # Uncomment if you are using HTTPS and have a validated ACM certificate.
-# resource "aws_lb_listener" "bs101-uat_https_listener" {
-#   load_balancer_arn = aws_lb.bs101-uat_lb.arn
+# resource "aws_lb_listener" "bme-uat_https_listener" {
+#   load_balancer_arn = aws_lb.bme-uat_lb.arn
 #   port              = 443
 #   protocol          = "HTTPS"
 #   ssl_policy        = "ELBSecurityPolicy-2016-08"
-#   certificate_arn   = aws_acm_certificate.bs101-uat_cert.arn
+#   certificate_arn   = aws_acm_certificate.bme-uat_cert.arn
 #
 #   default_action {
 #     type             = "forward"
-#     target_group_arn = aws_lb_target_group.bs101-uat_tg.arn
+#     target_group_arn = aws_lb_target_group.bme-uat_tg.arn
 #   }
 # }
 
 # Route 53 A Record to point domain to Load Balancer
-resource "aws_route53_record" "bs101-uat_record" {
+resource "aws_route53_record" "bme-uat_record" {
   zone_id = aws_route53_zone.bs101_zone.zone_id
   name    = "bs101.com"
   type    = "A"
   alias {
-    name                   = aws_lb.bs101-uat_lb.dns_name
-    zone_id                = aws_lb.bs101-uat_lb.zone_id
+    name                   = aws_lb.bme-uat_lb.dns_name
+    zone_id                = aws_lb.bme-uat_lb.zone_id
     evaluate_target_health = true
   }
 }
 
 # If the second record is needed, rename it to a unique name
-resource "aws_route53_record" "bs101-uat_record_alt" {
+resource "aws_route53_record" "bme-uat_record_alt" {
   zone_id = aws_route53_zone.bs101_zone.zone_id
   name    = "alt.bs101.com" # Use a different subdomain or name
   type    = "A"
   alias {
-    name                   = aws_lb.bs101-uat_lb.dns_name
-    zone_id                = aws_lb.bs101-uat_lb.zone_id
+    name                   = aws_lb.bme-uat_lb.dns_name
+    zone_id                = aws_lb.bme-uat_lb.zone_id
     evaluate_target_health = true
   }
 }

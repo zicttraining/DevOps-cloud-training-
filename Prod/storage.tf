@@ -1,10 +1,10 @@
 # S3 Bucket for application storage with private access
 # S3 Bucket for application storage with private access
 resource "aws_s3_bucket" "bs101_prod_app_bucket" {
-  bucket = "bs101-prod-app-logs-${random_id.bucket_suffix.hex}"
+  bucket = "bme-prod-app-logs-${random_id.bucket_suffix.hex}"
 
   tags = {
-    Name = "bs101-uay-app-logs"
+    Name = "bme-uay-app-logs"
   }
 }
 
@@ -110,11 +110,11 @@ resource "aws_s3_bucket_policy" "bs101_prod_app_bucket_policy" {
 
 
 # EBS Volume for additional storage attached to the web server
-resource "aws_ebs_volume" "bs101-prod-app_web_ebs" {
+resource "aws_ebs_volume" "bme-prod-app_web_ebs" {
   availability_zone = "us-west-2a" # Corrected spelling
   size              = 10           # Size in GB
   tags = {
-    Name = "bs101-prod-app-web-ebs"
+    Name = "bme-prod-app-web-ebs"
   }
 }
 
