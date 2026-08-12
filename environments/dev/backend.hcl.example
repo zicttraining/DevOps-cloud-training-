@@ -1,0 +1,5 @@
+bucket         = "bme-dev-app-bucket2"
+key            = "teams/bme/dev/terraform.tfstate"
+region         = "us-west-2"
+use_lockfile    = true
+encrypt        = true
