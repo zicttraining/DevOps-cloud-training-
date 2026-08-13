@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "feature/**"
+      - "develop"
+      - "main"
     paths:
       - "modules/**"
       - "environments/**"
@@ -30,7 +32,7 @@ permissions:
 jobs:
   feature-validation:
     name: Feature branch validation
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/feature/')
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -54,22 +56,22 @@ jobs:
         run: terraform validate
 
   deploy:
-    name: ${{ github.event.inputs.action }}-${{ github.event.inputs.environment }}
-    if: github.event_name == 'workflow_dispatch'
+    name: ${{ github.event.inputs.action || 'deploy' }}-${{ github.event.inputs.environment || 'dev' }}
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment || 'dev' }}
 
     permissions:
       id-token: write
       contents: read
 
     concurrency:
-      group: terraform-${{ github.event.inputs.environment }}
+      group: terraform-${{ github.event.inputs.environment || 'dev' }}
       cancel-in-progress: false
 
     defaults:
       run:
-        working-directory: environments/${{ github.event.inputs.environment }}
+        working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
 
     steps:
       - name: Checkout repository
@@ -80,7 +82,7 @@ jobs:
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
-          role-session-name: zict-${{ github.event.inputs.environment }}-${{ github.run_id }}
+          role-session-name: zict-${{ github.event.inputs.environment || 'dev' }}-${{ github.run_id }}
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -114,7 +116,7 @@ jobs:
         run: terraform plan -destroy -input=false -out=tfplan
 
       - name: Apply plan
-        if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'destroy'
+        if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'destroy' || github.event_name == 'push'
         env:
           TF_VAR_database_password: ${{ secrets.DATABASE_PASSWORD }}
         run: terraform apply -input=false -auto-approve tfplan
