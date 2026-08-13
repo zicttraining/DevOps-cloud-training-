@@ -1,125 +1,120 @@
-name: AWS Terraform CI/CD
+name: ZiCloudTech Terraform CI/CD
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+      - "feature/**"
+    paths:
+      - "modules/**"
+      - "environments/**"
+      - ".github/workflows/deploy.yml"
+
   workflow_dispatch:
     inputs:
-      deploy_to_production:
-        description: 'Deploy to Production?'
-        required: false
-        default: 'false'
-        type: choice
-        options: [false, true]
-      destroy:
-        description: 'Destroy infrastructure?'
-        required: false
-        default: 'false'
-        type: choice
-        options: [false, true]
       environment:
-        description: 'Which environment to destroy or deploy?'
+        description: Environment to plan, deploy, or destroy
         required: true
-        default: 'prod'
+        default: dev
         type: choice
         options: [dev, uat, prod]
+      action:
+        description: Terraform action
+        required: true
+        default: plan
+        type: choice
+        options: [plan, apply, destroy]
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
-  deploy-dev:
-    name: Deploy to Dev
-    if: github.ref != 'refs/heads/main' && github.event.inputs.destroy != 'true'
+  feature-validation:
+    name: Feature branch validation
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Dev
-    steps:
-      - uses: actions/checkout@v4
-      - name: Configure AWS Credentials (Dev)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::418059030794:role/GitHubActionsRole
-          aws-region: us-west-2
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-      - name: Terraform Init
-        run: terraform init -reconfigure
-      - name: Terraform Plan
-        run: terraform plan
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+        working-directory: environments/dev
 
-  deploy-uat:
-    name: Deploy to UAT
-    if: github.ref != 'refs/heads/main' && github.event.inputs.destroy != 'true'
-    runs-on: ubuntu-latest
-    needs: deploy-dev
-    defaults:
-      run:
-        working-directory: UAT
     steps:
-      - uses: actions/checkout@v4
-      - name: Configure AWS Credentials (UAT)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::283146810553:role/GithubActionRole-UAT
-          aws-region: us-west-2
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-      - name: Terraform Init
-        run: terraform init -reconfigure
-      - name: Terraform Plan
-        run: terraform plan
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  deploy-prod:
-    name: Deploy to Production
-    if: github.ref == 'refs/heads/main' && github.event.inputs.deploy_to_production == 'true'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: Prod
-    steps:
-      - uses: actions/checkout@v4
-      - name: Configure AWS Credentials (Prod)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::233291747054:role/GitHubActionsRole-Prod
-          aws-region: us-west-2
-      - name: Setup Terraform
+      - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
-      - name: Terraform Init
-        run: terraform init -reconfigure
-      - name: Terraform Plan
-        run: terraform plan
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
 
-  destroy:
-    name: Destroy Infrastructure
-    if: github.event.inputs.destroy == 'true'
+      - name: Format Terraform files
+        working-directory: .
+        run: terraform fmt -recursive
+
+      - name: Initialize without remote backend
+        run: terraform init -backend=false
+
+      - name: Validate Terraform
+        run: terraform validate
+
+  deploy:
+    name: ${{ github.event.inputs.action }}-${{ github.event.inputs.environment }}
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    permissions:
+      id-token: write
+      contents: read
+
+    concurrency:
+      group: terraform-${{ github.event.inputs.environment }}
+      cancel-in-progress: false
+
     defaults:
       run:
-        working-directory: ${{ github.event.inputs.environment == 'dev' && 'Dev' || github.event.inputs.environment == 'uat' && 'UAT' || 'Prod' }}
+        working-directory: environments/${{ github.event.inputs.environment }}
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Configure AWS Credentials
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: >-
-            ${{ github.event.inputs.environment == 'dev' && 'arn:aws:iam::817715291662:role/GitHubActionsRole' || 
-                github.event.inputs.environment == 'uat' && 'arn:aws:iam::887942575674:role/GitHubActionsRole' || 
-                'arn:aws:iam::403884279428:role/GitHubActionsRole' }}
-          aws-region: us-west-2
-      - name: Setup Terraform
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: zict-${{ github.event.inputs.environment }}-${{ github.run_id }}
+
+      - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
-      - name: Terraform Init
-        run: terraform init -reconfigure
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
+
+      - name: Format Terraform files
+        working-directory: .
+        run: terraform fmt -recursive
+
+      - name: Initialize remote backend
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
+            -backend-config="key=${{ vars.TF_STATE_KEY }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}" \
+            -backend-config="use_lockfile=true" \
+            -backend-config="encrypt=true"
+
+      - name: Validate Terraform
+        run: terraform validate
+
+      - name: Create plan
+        if: github.event.inputs.action != 'destroy'
+        env:
+          TF_VAR_database_password: ${{ secrets.DATABASE_PASSWORD }}
+        run: terraform plan -input=false -out=tfplan
+
+      - name: Create destroy plan
+        if: github.event.inputs.action == 'destroy'
+        env:
+          TF_VAR_database_password: ${{ secrets.DATABASE_PASSWORD }}
+        run: terraform plan -destroy -input=false -out=tfplan
+
+      - name: Apply plan
+        if: github.event.inputs.action == 'apply' || github.event.inputs.action == 'destroy'
+        env:
+          TF_VAR_database_password: ${{ secrets.DATABASE_PASSWORD }}
+        run: terraform apply -input=false -auto-approve tfplan

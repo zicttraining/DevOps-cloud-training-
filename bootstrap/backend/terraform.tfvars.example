@@ -1,0 +1,6 @@
+aws_region        = "us-west-2"
+state_bucket_name = "REPLACE_WITH_GLOBALLY_UNIQUE_STATE_BUCKET"
+tags = {
+  Program = "ZiCloudTech"
+  Team    = "REPLACE_WITH_TEAM_NAME"
+}

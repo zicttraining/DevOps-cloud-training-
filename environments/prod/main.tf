@@ -1,0 +1,21 @@
+module "environment" {
+  source                           = "../../modules/environment-stack"
+  project_name                     = var.project_name
+  environment                      = var.environment
+  vpc_cidr                         = var.vpc_cidr
+  public_subnets                   = var.public_subnets
+  private_subnets                  = var.private_subnets
+  enable_nat_gateway               = var.enable_nat_gateway
+  ami_id                           = var.ami_id
+  instance_type                    = var.instance_type
+  database_name                    = var.database_name
+  database_username                = var.database_username
+  database_password                = var.database_password
+  database_deletion_protection     = var.database_deletion_protection
+  database_skip_final_snapshot     = var.database_skip_final_snapshot
+  database_backup_retention_period = var.database_backup_retention_period
+  domain_name                      = var.domain_name
+  notification_email               = var.notification_email
+  monthly_budget                   = var.monthly_budget
+  tags                             = var.tags
+}
